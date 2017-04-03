@@ -6,40 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>817</width>
-    <height>794</height>
+    <width>539</width>
+    <height>656</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>80</y>
-      <width>161</width>
-      <height>181</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCustomPlot" name="customPlot" native="true">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>90</y>
-      <width>591</width>
-      <height>611</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>525</width>
+      <x>9</x>
+      <y>9</y>
+      <width>521</width>
       <height>56</height>
      </rect>
     </property>
@@ -105,7 +85,7 @@
           <bool>false</bool>
          </property>
          <property name="default">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="flat">
           <bool>false</bool>
@@ -116,63 +96,101 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="messageLabel">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>720</y>
-      <width>460</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>460</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>460</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>当前状态</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>63</x>
-      <y>721</y>
-      <width>54</width>
+      <x>9</x>
+      <y>576</y>
+      <width>521</width>
       <height>16</height>
      </rect>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>54</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>54</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>连接状态：</string>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="minimumSize">
+        <size>
+         <width>54</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>54</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>连接状态：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="messageLabel">
+       <property name="minimumSize">
+        <size>
+         <width>460</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>460</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>当前状态</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowserSerial">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>320</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
     </property>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>71</y>
+      <width>339</width>
+      <height>194</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QTextBrowser" name="textBrowser"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>查看波形</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>textBrowser</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>messageLabel</zorder>
+   <zorder>textBrowserSerial</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>817</width>
+     <width>539</width>
      <height>23</height>
     </rect>
    </property>
@@ -188,14 +206,6 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header>../../qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

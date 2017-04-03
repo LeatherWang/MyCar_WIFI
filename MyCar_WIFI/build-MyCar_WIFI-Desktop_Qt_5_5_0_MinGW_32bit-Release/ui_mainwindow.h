@@ -32,21 +32,18 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
+    QTextBrowser *textBrowser;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_2;
     QLineEdit *send_lineEdit;
     QVBoxLayout *verticalLayout;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
+    QPushButton *pushButton_3;
     QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QLabel *messageLabel;
-    QTextBrowser *textBrowserSerial;
-    QWidget *widget;
-    QHBoxLayout *horizontalLayout_3;
-    QTextBrowser *textBrowser;
-    QPushButton *pushButton_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -55,12 +52,15 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(539, 656);
+        MainWindow->resize(539, 512);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        textBrowser = new QTextBrowser(centralWidget);
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        textBrowser->setGeometry(QRect(10, 80, 431, 341));
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(9, 9, 521, 56));
+        layoutWidget->setGeometry(QRect(0, 0, 525, 56));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -96,9 +96,12 @@ public:
 
         horizontalLayout_2->addLayout(verticalLayout);
 
+        pushButton_3 = new QPushButton(centralWidget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(450, 80, 75, 23));
         layoutWidget1 = new QWidget(centralWidget);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(9, 576, 521, 16));
+        layoutWidget1->setGeometry(QRect(10, 440, 522, 14));
         horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -118,34 +121,12 @@ public:
 
         horizontalLayout->addWidget(messageLabel);
 
-        textBrowserSerial = new QTextBrowser(centralWidget);
-        textBrowserSerial->setObjectName(QStringLiteral("textBrowserSerial"));
-        textBrowserSerial->setGeometry(QRect(260, 320, 256, 192));
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(9, 71, 339, 194));
-        horizontalLayout_3 = new QHBoxLayout(widget);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
-        textBrowser = new QTextBrowser(widget);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
-
-        horizontalLayout_3->addWidget(textBrowser);
-
-        pushButton_3 = new QPushButton(widget);
-        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
-
-        horizontalLayout_3->addWidget(pushButton_3);
-
         MainWindow->setCentralWidget(centralWidget);
         textBrowser->raise();
         layoutWidget->raise();
         pushButton_3->raise();
         layoutWidget->raise();
         messageLabel->raise();
-        textBrowserSerial->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 539, 23));
@@ -170,9 +151,9 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         pushButton->setText(QApplication::translate("MainWindow", "\350\277\236\346\216\245\346\234\215\345\212\241\345\231\250", 0));
         pushButton_2->setText(QApplication::translate("MainWindow", "\345\217\221\351\200\201", 0));
+        pushButton_3->setText(QApplication::translate("MainWindow", "\346\237\245\347\234\213\346\263\242\345\275\242", 0));
         label->setText(QApplication::translate("MainWindow", "\350\277\236\346\216\245\347\212\266\346\200\201\357\274\232", 0));
         messageLabel->setText(QApplication::translate("MainWindow", "\345\275\223\345\211\215\347\212\266\346\200\201", 0));
-        pushButton_3->setText(QApplication::translate("MainWindow", "\346\237\245\347\234\213\346\263\242\345\275\242", 0));
     } // retranslateUi
 
 };

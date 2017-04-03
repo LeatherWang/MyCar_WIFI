@@ -5,19 +5,19 @@
 # Template: app
 #############################################################################
 
-MAKEFILE      = Makefile.Release
+MAKEFILE      = Makefile.Debug
 
 ####### Compiler, tools and options
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
-CFLAGS        = -pipe -fno-keep-inline-dllexport -O2 -Wall -Wextra $(DEFINES)
-CXXFLAGS      = -pipe -fno-keep-inline-dllexport -O2 -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I..\..\MyCar_WIFI -I. -ID:\promile\QT\5.5\mingw492_32\include -ID:\promile\QT\5.5\mingw492_32\include\QtPrintSupport -ID:\promile\QT\5.5\mingw492_32\include\QtWidgets -ID:\promile\QT\5.5\mingw492_32\include\QtGui -ID:\promile\QT\5.5\mingw492_32\include\QtANGLE -ID:\promile\QT\5.5\mingw492_32\include\QtNetwork -ID:\promile\QT\5.5\mingw492_32\include\QtCore -Irelease -I. -ID:\promile\QT\5.5\mingw492_32\mkspecs\win32-g++ 
+DEFINES       = -DUNICODE -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
+CFLAGS        = -pipe -fno-keep-inline-dllexport -g -Wall -Wextra $(DEFINES)
+CXXFLAGS      = -pipe -fno-keep-inline-dllexport -g -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
+INCPATH       = -I..\..\MyCar_WIFI -I. -ID:\promile\QT\5.5\mingw492_32\include -ID:\promile\QT\5.5\mingw492_32\include\QtPrintSupport -ID:\promile\QT\5.5\mingw492_32\include\QtWidgets -ID:\promile\QT\5.5\mingw492_32\include\QtGui -ID:\promile\QT\5.5\mingw492_32\include\QtANGLE -ID:\promile\QT\5.5\mingw492_32\include\QtNetwork -ID:\promile\QT\5.5\mingw492_32\include\QtCore -Idebug -I. -ID:\promile\QT\5.5\mingw492_32\mkspecs\win32-g++ 
 LINKER      =        g++
-LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
-LIBS        =        -lmingw32 -LD:/promile/QT/5.5/mingw492_32/lib -lqtmain -lshell32 -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core 
+LFLAGS        =        -Wl,-subsystem,windows -mthreads
+LIBS        =        -lmingw32 -LD:/promile/QT/5.5/mingw492_32/lib -lqtmaind -lshell32 -lQt5PrintSupportd -lQt5Widgetsd -lQt5Guid -lQt5Networkd -lQt5Cored 
 QMAKE         = D:\promile\QT\5.5\mingw492_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -39,23 +39,23 @@ INSTALL_DIR     = xcopy /s /q /y /i
 
 ####### Output directory
 
-OBJECTS_DIR   = release
+OBJECTS_DIR   = debug
 
 ####### Files
 
 SOURCES       = ..\main.cpp \
 		..\mainwindow.cpp \
 		..\scope.cpp \
-		..\qcustomplot\qcustomplot.cpp release\moc_mainwindow.cpp \
-		release\moc_scope.cpp \
-		release\moc_qcustomplot.cpp
-OBJECTS       = release/main.o \
-		release/mainwindow.o \
-		release/scope.o \
-		release/qcustomplot.o \
-		release/moc_mainwindow.o \
-		release/moc_scope.o \
-		release/moc_qcustomplot.o
+		..\qcustomplot\qcustomplot.cpp debug\moc_mainwindow.cpp \
+		debug\moc_scope.cpp \
+		debug\moc_qcustomplot.cpp
+OBJECTS       = debug/main.o \
+		debug/mainwindow.o \
+		debug/scope.o \
+		debug/qcustomplot.o \
+		debug/moc_mainwindow.o \
+		debug/moc_scope.o \
+		debug/moc_qcustomplot.o
 
 DIST          =  ..\mainwindow.h \
 		..\scope.h \
@@ -64,9 +64,9 @@ DIST          =  ..\mainwindow.h \
 		..\scope.cpp \
 		..\qcustomplot\qcustomplot.cpp
 QMAKE_TARGET  = MyCar_WIFI
-DESTDIR        = release\ #avoid trailing-slash linebreak
+DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = MyCar_WIFI.exe
-DESTDIR_TARGET = release\MyCar_WIFI.exe
+DESTDIR_TARGET = debug\MyCar_WIFI.exe
 
 ####### Implicit rules
 
@@ -87,25 +87,25 @@ DESTDIR_TARGET = release\MyCar_WIFI.exe
 ####### Build rules
 
 first: all
-all: Makefile.Release  $(DESTDIR_TARGET)
+all: Makefile.Debug  $(DESTDIR_TARGET)
 
 $(DESTDIR_TARGET): ui_mainwindow.h ui_scope.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) -o $(DESTDIR_TARGET) $(OBJECTS)  $(LIBS)
 
 qmake: FORCE
-	@$(QMAKE) -spec win32-g++ "CONFIG+=debug" -o Makefile.Release ..\MyCar_WIFI.pro
+	@$(QMAKE) -spec win32-g++ -o Makefile.Debug ..\MyCar_WIFI.pro
 
 qmake_all: FORCE
 
 dist:
-	$(ZIP) MyCar_WIFI.zip $(SOURCES) $(DIST) ..\..\MyCar_WIFI.pro D:\promile\QT\5.5\mingw492_32\mkspecs\features\spec_pre.prf D:\promile\QT\5.5\mingw492_32\mkspecs\qdevice.pri D:\promile\QT\5.5\mingw492_32\mkspecs\features\device_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\qconfig.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bootstrap_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_clucene_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designercomponents_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_platformsupport_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickparticles_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uiplugin.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\features\qt_functions.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\qt_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\qt_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\win32-g++\qmake.conf D:\promile\QT\5.5\mingw492_32\mkspecs\features\spec_post.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\default_pre.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\default_pre.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\resolve_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds_post.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\default_post.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\build_pass.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\rtti.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\precompile_header.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\warn_on.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\qt.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\resources.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\moc.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\opengl.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\uic.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\windows.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\testcase_targets.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\exceptions.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\yacc.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\lex.prf ..\MyCar_WIFI.pro D:/promile/QT/5.5/mingw492_32/lib/qtmain.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5PrintSupport.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Widgets.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Gui.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Network.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Core.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
+	$(ZIP) MyCar_WIFI.zip $(SOURCES) $(DIST) ..\MyCar_WIFI.pro D:\promile\QT\5.5\mingw492_32\mkspecs\features\spec_pre.prf D:\promile\QT\5.5\mingw492_32\mkspecs\qdevice.pri D:\promile\QT\5.5\mingw492_32\mkspecs\features\device_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\qconfig.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_bootstrap_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_clucene_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_core_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designer_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_designercomponents_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_gui_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_help_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_location_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_network_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_platformsupport_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qml_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quick_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickparticles_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_script_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_sql_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_svg_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uiplugin.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xml_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns.pri D:\promile\QT\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\promile\QT\5.5\mingw492_32\mkspecs\features\qt_functions.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\qt_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\qt_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\win32-g++\qmake.conf D:\promile\QT\5.5\mingw492_32\mkspecs\features\spec_post.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\default_pre.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\default_pre.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\resolve_config.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\exclusive_builds_post.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\default_post.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\build_pass.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\rtti.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\precompile_header.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\warn_on.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\qt.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\resources.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\moc.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\opengl.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\uic.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\win32\windows.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\testcase_targets.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\exceptions.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\yacc.prf D:\promile\QT\5.5\mingw492_32\mkspecs\features\lex.prf ..\MyCar_WIFI.pro D:/promile/QT/5.5/mingw492_32/lib/qtmaind.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5PrintSupportd.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Widgetsd.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Guid.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Networkd.prl D:/promile/QT/5.5/mingw492_32/lib/Qt5Cored.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\mainwindow.o release\scope.o release\qcustomplot.o release\moc_mainwindow.o release\moc_scope.o release\moc_qcustomplot.o
+	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\scope.o debug\qcustomplot.o debug\moc_mainwindow.o debug\moc_scope.o debug\moc_qcustomplot.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
-	-$(DEL_FILE) Makefile.Release
+	-$(DEL_FILE) Makefile.Debug
 
 mocclean: compiler_moc_header_clean compiler_moc_source_clean
 
@@ -117,10 +117,10 @@ compiler_no_pch_compiler_make_all:
 compiler_no_pch_compiler_clean:
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: release/moc_mainwindow.cpp release/moc_scope.cpp release/moc_qcustomplot.cpp
+compiler_moc_header_make_all: debug/moc_mainwindow.cpp debug/moc_scope.cpp debug/moc_qcustomplot.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) release\moc_mainwindow.cpp release\moc_scope.cpp release\moc_qcustomplot.cpp
-release/moc_mainwindow.cpp: D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QMainWindow \
+	-$(DEL_FILE) debug\moc_mainwindow.cpp debug\moc_scope.cpp debug\moc_qcustomplot.cpp
+debug/moc_mainwindow.cpp: D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QMainWindow \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qmainwindow.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qwidget.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qwindowdefs.h \
@@ -388,9 +388,9 @@ release/moc_mainwindow.cpp: D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QMai
 		../scope.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QWidget \
 		../mainwindow.h
-	D:\promile\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++ -IF:/MyData/GitHubData/MyCar_WIFI/MyCar_WIFI -ID:/promile/QT/5.5/mingw492_32/include -ID:/promile/QT/5.5/mingw492_32/include/QtPrintSupport -ID:/promile/QT/5.5/mingw492_32/include/QtWidgets -ID:/promile/QT/5.5/mingw492_32/include/QtGui -ID:/promile/QT/5.5/mingw492_32/include/QtANGLE -ID:/promile/QT/5.5/mingw492_32/include/QtNetwork -ID:/promile/QT/5.5/mingw492_32/include/QtCore -I. ..\mainwindow.h -o release\moc_mainwindow.cpp
+	D:\promile\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++ -IF:/MyData/GitHubData/MyCar_WIFI/MyCar_WIFI -ID:/promile/QT/5.5/mingw492_32/include -ID:/promile/QT/5.5/mingw492_32/include/QtPrintSupport -ID:/promile/QT/5.5/mingw492_32/include/QtWidgets -ID:/promile/QT/5.5/mingw492_32/include/QtGui -ID:/promile/QT/5.5/mingw492_32/include/QtANGLE -ID:/promile/QT/5.5/mingw492_32/include/QtNetwork -ID:/promile/QT/5.5/mingw492_32/include/QtCore -I. ..\mainwindow.h -o debug\moc_mainwindow.cpp
 
-release/moc_scope.cpp: D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QWidget \
+debug/moc_scope.cpp: D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QWidget \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qwidget.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qwindowdefs.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qglobal.h \
@@ -493,9 +493,9 @@ release/moc_scope.cpp: D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QWidget \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qvector2d.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qtouchdevice.h \
 		../scope.h
-	D:\promile\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++ -IF:/MyData/GitHubData/MyCar_WIFI/MyCar_WIFI -ID:/promile/QT/5.5/mingw492_32/include -ID:/promile/QT/5.5/mingw492_32/include/QtPrintSupport -ID:/promile/QT/5.5/mingw492_32/include/QtWidgets -ID:/promile/QT/5.5/mingw492_32/include/QtGui -ID:/promile/QT/5.5/mingw492_32/include/QtANGLE -ID:/promile/QT/5.5/mingw492_32/include/QtNetwork -ID:/promile/QT/5.5/mingw492_32/include/QtCore -I. ..\scope.h -o release\moc_scope.cpp
+	D:\promile\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++ -IF:/MyData/GitHubData/MyCar_WIFI/MyCar_WIFI -ID:/promile/QT/5.5/mingw492_32/include -ID:/promile/QT/5.5/mingw492_32/include/QtPrintSupport -ID:/promile/QT/5.5/mingw492_32/include/QtWidgets -ID:/promile/QT/5.5/mingw492_32/include/QtGui -ID:/promile/QT/5.5/mingw492_32/include/QtANGLE -ID:/promile/QT/5.5/mingw492_32/include/QtNetwork -ID:/promile/QT/5.5/mingw492_32/include/QtCore -I. ..\scope.h -o debug\moc_scope.cpp
 
-release/moc_qcustomplot.cpp: D:/promile/QT/5.5/mingw492_32/include/QtCore/qglobal.h \
+debug/moc_qcustomplot.cpp: D:/promile/QT/5.5/mingw492_32/include/QtCore/qglobal.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qconfig.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qfeatures.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qsystemdetection.h \
@@ -986,7 +986,7 @@ release/moc_qcustomplot.cpp: D:/promile/QT/5.5/mingw492_32/include/QtCore/qgloba
 		D:/promile/QT/5.5/mingw492_32/include/QtPrintSupport/qprintpreviewwidget.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtPrintSupport/qtprintsupportversion.h \
 		../qcustomplot/qcustomplot.h
-	D:\promile\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++ -IF:/MyData/GitHubData/MyCar_WIFI/MyCar_WIFI -ID:/promile/QT/5.5/mingw492_32/include -ID:/promile/QT/5.5/mingw492_32/include/QtPrintSupport -ID:/promile/QT/5.5/mingw492_32/include/QtWidgets -ID:/promile/QT/5.5/mingw492_32/include/QtGui -ID:/promile/QT/5.5/mingw492_32/include/QtANGLE -ID:/promile/QT/5.5/mingw492_32/include/QtNetwork -ID:/promile/QT/5.5/mingw492_32/include/QtCore -I. ..\qcustomplot\qcustomplot.h -o release\moc_qcustomplot.cpp
+	D:\promile\QT\5.5\mingw492_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -ID:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++ -IF:/MyData/GitHubData/MyCar_WIFI/MyCar_WIFI -ID:/promile/QT/5.5/mingw492_32/include -ID:/promile/QT/5.5/mingw492_32/include/QtPrintSupport -ID:/promile/QT/5.5/mingw492_32/include/QtWidgets -ID:/promile/QT/5.5/mingw492_32/include/QtGui -ID:/promile/QT/5.5/mingw492_32/include/QtANGLE -ID:/promile/QT/5.5/mingw492_32/include/QtNetwork -ID:/promile/QT/5.5/mingw492_32/include/QtCore -I. ..\qcustomplot\qcustomplot.h -o debug\moc_qcustomplot.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1011,7 +1011,7 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-release/main.o: ../main.cpp ../mainwindow.h \
+debug/main.o: ../main.cpp ../mainwindow.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QMainWindow \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qmainwindow.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qwidget.h \
@@ -1284,9 +1284,9 @@ release/main.o: ../main.cpp ../mainwindow.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qdesktopwidget.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qguiapplication.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qinputmethod.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\main.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\main.cpp
 
-release/mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
+debug/mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QMainWindow \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qmainwindow.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qwidget.h \
@@ -1554,62 +1554,10 @@ release/mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtNetwork/qtnetworkversion.h \
 		../scope.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QWidget \
-		ui_mainwindow.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QAction \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qaction.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qactiongroup.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QApplication \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qapplication.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qdesktopwidget.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qguiapplication.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qinputmethod.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QButtonGroup \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qbuttongroup.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QHBoxLayout \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qboxlayout.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qlayout.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qlayoutitem.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qgridlayout.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QHeaderView \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qheaderview.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractitemview.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractscrollarea.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qframe.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractitemdelegate.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qstyleoption.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractspinbox.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qvalidator.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qslider.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractslider.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qstyle.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qtabbar.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qrubberband.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QLabel \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qlabel.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QLineEdit \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qlineedit.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qtextcursor.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qtextformat.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qpen.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qtextoption.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QMenuBar \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qmenubar.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qmenu.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QPushButton \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qpushbutton.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractbutton.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QStatusBar \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qstatusbar.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QTextBrowser \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qtextbrowser.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qtextedit.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qtextdocument.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QToolBar \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qtoolbar.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QVBoxLayout
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\mainwindow.cpp
+		ui_mainwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\mainwindow.cpp
 
-release/scope.o: ../scope.cpp ../scope.h \
+debug/scope.o: ../scope.cpp ../scope.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QWidget \
 		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qwidget.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qwindowdefs.h \
@@ -1712,42 +1660,10 @@ release/scope.o: ../scope.cpp ../scope.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qfiledevice.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qvector2d.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtGui/qtouchdevice.h \
-		ui_scope.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtCore/QVariant \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QAction \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qaction.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qicon.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qactiongroup.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QApplication \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qapplication.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtCore/qcoreapplication.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtCore/qeventloop.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qdesktopwidget.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qguiapplication.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qinputmethod.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QButtonGroup \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qbuttongroup.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/QHeaderView \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qheaderview.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractitemview.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractscrollarea.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qframe.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtCore/qabstractitemmodel.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtCore/qitemselectionmodel.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractitemdelegate.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qstyleoption.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractspinbox.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtGui/qvalidator.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtCore/qregularexpression.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qslider.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qabstractslider.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qstyle.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qtabbar.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qtabwidget.h \
-		D:/promile/QT/5.5/mingw492_32/include/QtWidgets/qrubberband.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\scope.o ..\scope.cpp
+		ui_scope.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\scope.o ..\scope.cpp
 
-release/qcustomplot.o: ../qcustomplot/qcustomplot.cpp ../qcustomplot/qcustomplot.h \
+debug/qcustomplot.o: ../qcustomplot/qcustomplot.cpp ../qcustomplot/qcustomplot.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qglobal.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qconfig.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtCore/qfeatures.h \
@@ -2238,16 +2154,16 @@ release/qcustomplot.o: ../qcustomplot/qcustomplot.cpp ../qcustomplot/qcustomplot
 		D:/promile/QT/5.5/mingw492_32/include/QtPrintSupport/qprinterinfo.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtPrintSupport/qprintpreviewwidget.h \
 		D:/promile/QT/5.5/mingw492_32/include/QtPrintSupport/qtprintsupportversion.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\qcustomplot.o ..\qcustomplot\qcustomplot.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qcustomplot.o ..\qcustomplot\qcustomplot.cpp
 
-release/moc_mainwindow.o: release/moc_mainwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_mainwindow.o release\moc_mainwindow.cpp
+debug/moc_mainwindow.o: debug/moc_mainwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_mainwindow.o debug\moc_mainwindow.cpp
 
-release/moc_scope.o: release/moc_scope.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_scope.o release\moc_scope.cpp
+debug/moc_scope.o: debug/moc_scope.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_scope.o debug\moc_scope.cpp
 
-release/moc_qcustomplot.o: release/moc_qcustomplot.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_qcustomplot.o release\moc_qcustomplot.cpp
+debug/moc_qcustomplot.o: debug/moc_qcustomplot.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\moc_qcustomplot.o debug\moc_qcustomplot.cpp
 
 ####### Install
 
