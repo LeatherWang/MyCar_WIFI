@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -24,3 +24,6 @@ HEADERS  += \
 
 FORMS    += mainwindow.ui \
     scope.ui
+include(./qextserialport-1.2beta2/src/qextserialport.pri)
+
+DISTFILES +=

@@ -171,6 +171,7 @@ Makefile: ../MyCar_WIFI.pro D:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++/qmak
 		D:/promile/QT/5.5/mingw492_32/mkspecs/features/exclusive_builds.prf \
 		D:/promile/QT/5.5/mingw492_32/mkspecs/features/default_pre.prf \
 		D:/promile/QT/5.5/mingw492_32/mkspecs/features/win32/default_pre.prf \
+		../qextserialport-1.2beta2/src/qextserialport.pri \
 		D:/promile/QT/5.5/mingw492_32/mkspecs/features/resolve_config.prf \
 		D:/promile/QT/5.5/mingw492_32/mkspecs/features/exclusive_builds_post.prf \
 		D:/promile/QT/5.5/mingw492_32/mkspecs/features/default_post.prf \
@@ -193,6 +194,7 @@ Makefile: ../MyCar_WIFI.pro D:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++/qmak
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5Widgets.prl \
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5Gui.prl \
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5Network.prl \
+		D:/promile/QT/5.5/mingw492_32/lib/Qt5SerialPort.prl \
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-g++ "CONFIG+=debug" -o Makefile ..\MyCar_WIFI.pro
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/spec_pre.prf:
@@ -307,6 +309,7 @@ D:/promile/QT/5.5/mingw492_32/mkspecs/features/spec_post.prf:
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/exclusive_builds.prf:
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/default_pre.prf:
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/win32/default_pre.prf:
+../qextserialport-1.2beta2/src/qextserialport.pri:
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/resolve_config.prf:
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/exclusive_builds_post.prf:
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/default_post.prf:
@@ -329,6 +332,7 @@ D:/promile/QT/5.5/mingw492_32/lib/Qt5PrintSupport.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5Widgets.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5Gui.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5Network.prl:
+D:/promile/QT/5.5/mingw492_32/lib/Qt5SerialPort.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ "CONFIG+=debug" -o Makefile ..\MyCar_WIFI.pro

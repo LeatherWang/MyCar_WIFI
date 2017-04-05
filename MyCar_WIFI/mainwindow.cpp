@@ -6,29 +6,33 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->pushButton->setStyleSheet("background-color:rgb(145,200,200);");
-    ui->pushButton_2->setStyleSheet("background-color:rgb(180,218,218);");
-
-    tcpSocket = new QTcpSocket(this);
-    connect(tcpSocket,SIGNAL(readyRead()),this,SLOT(readMessage()));
-    connect(tcpSocket,SIGNAL(error(QAbstractSocket::SocketError)),
-            this,SLOT(displayError(QAbstractSocket::SocketError)));
-
-    serialSocket = new QTcpSocket(this);
-    connect(serialSocket,SIGNAL(readyRead()),this,SLOT(readSerialMessage()));
-    connect(serialSocket,SIGNAL(error(QAbstractSocket::SocketError)),
-            this,SLOT(displaySerialError(QAbstractSocket::SocketError)));
-
-    myscope = new scope;
-
-    serialSocket->abort(); //取消已有的连接
-    //tcpSocket->connectToHost(ui->hostLineEdit->text(), ui->portLineEdit->text().toInt());
-    serialSocket->connectToHost("192.168.10.1",
-                                2001);//连接到主机，这里从界面获取主机地址和端口号
-
     zhentou.resize(2);
     zhentou[0] = 0XAA;
     zhentou[1] = 0XAF;
+    ui->pushButton_linkTCP->setStyleSheet("background-color:rgb(145,200,200);");
+    ui->pushButton_sendTCP->setStyleSheet("background-color:rgb(180,218,218);");
+
+    /*初始化TCP通信*/
+    tcpSocket = new QTcpSocket(this);
+    connect(tcpSocket,SIGNAL(readyRead()),this,SLOT(readTCPMessage()));
+    connect(tcpSocket,SIGNAL(error(QAbstractSocket::SocketError)),
+            this,SLOT(displayTCPError(QAbstractSocket::SocketError)));
+    ser2netSocket = new QTcpSocket(this);
+    connect(ser2netSocket,SIGNAL(readyRead()),this,SLOT(readSer2netMessage()));
+    connect(ser2netSocket,SIGNAL(error(QAbstractSocket::SocketError)),
+            this,SLOT(displaySer2netError(QAbstractSocket::SocketError)));
+
+    /*初始化串口*/
+    m_Com = new QextSerialPort(QextSerialPort::EventDriven,this);
+    m_Com->setPortName("-1");
+    m_Com_Monitor = new QextSerialEnumerator(); //串口监视器，发布串口增加、移除等信号
+    m_Com_Monitor->setUpNotifications();
+    foreach (QextPortInfo info, QextSerialEnumerator::getPorts()) //利用此循环将serialList显示在portBox中
+    //ui->portBox->addItem(info.portName);
+    //ui->portBox->setEditable(false); //set true to make sure user can input their own port name!
+
+    /*初始化波形窗口*/
+    myscope = new scope;
 }
 
 MainWindow::~MainWindow()
@@ -36,25 +40,72 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::newConnect()
+bool openCloseFlag = false;
+void MainWindow::on_pushButton_linkTCP_clicked()
 {
-    blockSize = 0; //初始化其为0
-    tcpSocket->abort(); //取消已有的连接
-    //tcpSocket->connectToHost(ui->hostLineEdit->text(), ui->portLineEdit->text().toInt());
-    tcpSocket->connectToHost("192.168.10.1",
-                             8082);//连接到主机，这里从界面获取主机地址和端口号
+    if(openCloseFlag == false)
+    {
+        tcpSocket->abort(); //取消已有的连接
+        tcpSocket->connectToHost("192.168.10.1",
+                                 8082);//连接到主机，这里从界面获取主机地址和端口号
+        openCloseFlag = true;
+        ui->pushButton_linkTCP->setText("断开服务器");
+        ui->pushButton_linkTCP->setStyleSheet("background-color:rgb(255,128,128);");
+    }
+    else
+    {
+        tcpSocket->write("p");
+        tcpSocket->disconnectFromHost();
+        openCloseFlag = false;
+        ui->pushButton_linkTCP->setText("连接服务器");
+        ui->pushButton_linkTCP->setStyleSheet("background-color:rgb(145,200,200);");
+    }
+}
+
+void MainWindow::on_pushButton_sendTCP_clicked()
+{
+    tcpSocket->write(ui->lineEdit_sendTCP->text().toLatin1());
+}
+
+void MainWindow::on_pushButton_showScope_clicked()
+{
+    myscope->show();
+}
+
+void MainWindow::on_pushButton_linkSer2net_clicked()
+{
+    ser2netSocket->abort(); //取消已有的连接
+    ser2netSocket->connectToHost("192.168.10.1",
+                                2001);//连接到主机，这里从界面获取主机地址和端口号
+}
+
+void MainWindow::on_pushButton_sendSer2net_clicked()
+{
+    ser2netSocket->write(ui->lineEdit_sendSer2net->text().toLatin1());
+}
+
+void MainWindow::displayTCPError(QAbstractSocket::SocketError)
+{
+    qDebug() <<"error!"<< tcpSocket->errorString(); //输出错误信息
+    ui->messageLabel_linkTCPState->setText("<font color=red>error!!</font>"+tcpSocket->errorString());
+}
+
+void MainWindow::displaySer2netError(QAbstractSocket::SocketError)
+{
+    qDebug() <<"error!"<< ser2netSocket->errorString(); //输出错误信息
+    ui->messageLabel_linkTCPState->setText("<font color=red>error!!</font>"+ser2netSocket->errorString());
 }
 
 #define BSSID_raw 3
 char BSSID[BSSID_raw][18]{"20:0c:c8:4a:df:fa","fc:d7:33:4a:5c:c8","14:cf:92:46:24:86"};//SSID:Robot-AN-101,Robot-IS-108,WW
 float RSSIValue[BSSID_raw]={0.0};
 QByteArray byteArray;
-void MainWindow::readMessage()
+void MainWindow::readTCPMessage()
 {
     if(tcpSocket->bytesAvailable()>0)
     {
         const QByteArray data = tcpSocket->readAll();
-        ui->textBrowser->append(data);
+        ui->textBrowser_acceptTCP->append(data);
 
         for(quint8 i=0; i<BSSID_raw; i++)
         {
@@ -76,11 +127,11 @@ void MainWindow::readMessage()
 }
 
 QByteArray serialByteArray;
-void MainWindow::readSerialMessage()
+void MainWindow::readSer2netMessage()
 {
-    if(serialSocket->bytesAvailable()>0)
+    if(ser2netSocket->bytesAvailable()>0)
     {
-        const QByteArray data = serialSocket->readAll();
+        const QByteArray data = ser2netSocket->readAll();
         m_number_recive += data.size();
         QString str;
         for(int i=0;i<data.size();i++)
@@ -91,7 +142,7 @@ void MainWindow::readSerialMessage()
                 str.append(QString::number(quint8(data.at(i)),16).toUpper()+QString(" "));
         }
         //ui->textBrowserSerial->insertHtml(toBlueText(str));
-        ui->textBrowserSerial->append(str);
+        ui->textBrowser_acceptSer2net->append(str);
 
         /****************************** Start user code for include. **********************************/
         serialByteArray.append(data);
@@ -111,6 +162,10 @@ void MainWindow::readSerialMessage()
         /********************************* End user code. *********************************************/
     }
 }
+
+
+
+
 
 #include "math.h"
 typedef union
@@ -187,45 +242,5 @@ QString MainWindow::toBlueText(QString str)
     return str;
 }
 
-void MainWindow::displayError(QAbstractSocket::SocketError)
-{
-    qDebug() <<"error!"<< tcpSocket->errorString(); //输出错误信息
-    ui->messageLabel->setText("<font color=red>error!!</font>"+tcpSocket->errorString());
-}
 
-void MainWindow::displaySerialError(QAbstractSocket::SocketError)
-{
-    qDebug() <<"error!"<< serialSocket->errorString(); //输出错误信息
-    ui->messageLabel->setText("<font color=red>error!!</font>"+serialSocket->errorString());
-}
 
-bool openCloseFlag = false;
-void MainWindow::on_pushButton_clicked() //连接按钮
-{
-    if(openCloseFlag == false)
-    {
-        newConnect(); //请求连接
-        openCloseFlag = true;
-        ui->pushButton->setText("断开服务器");
-        ui->pushButton->setStyleSheet("background-color:rgb(255,128,128);");
-    }
-    else
-    {
-        tcpSocket->write("p");
-        tcpSocket->disconnectFromHost();
-        openCloseFlag = false;
-        ui->pushButton->setText("连接服务器");
-        ui->pushButton->setStyleSheet("background-color:rgb(145,200,200);");
-    }
-
-}
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    tcpSocket->write(ui->send_lineEdit->text().toLatin1());
-}
-
-void MainWindow::on_pushButton_3_clicked()
-{
-    myscope->show();
-}
