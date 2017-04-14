@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network serialport
+QT       += core gui network serialport sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -15,15 +15,25 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     scope.cpp \
-    qcustomplot/qcustomplot.cpp
+    qcustomplot/qcustomplot.cpp \
+    tcpsocket.cpp \
+    serialtalk.cpp \
+    form.cpp \
+    dialogdatabase.cpp \
+    algorithm.cpp
 
 HEADERS  += \
     mainwindow.h \
     scope.h \
-    qcustomplot/qcustomplot.h
+    qcustomplot/qcustomplot.h \
+    form.h \
+    dialogdatabase.h \
+    algorithm.h
 
 FORMS    += mainwindow.ui \
-    scope.ui
+    scope.ui \
+    form.ui \
+    dialogdatabase.ui
 include(./qextserialport-1.2beta2/src/qextserialport.pri)
 
 DISTFILES +=

@@ -3,6 +3,11 @@ INPUT(
 ./release\mainwindow.o
 ./release\scope.o
 ./release\qcustomplot.o
+./release\tcpsocket.o
+./release\serialtalk.o
+./release\form.o
+./release\dialogdatabase.o
+./release\algorithm.o
 ./release\qextserialport.o
 ./release\qextserialenumerator.o
 ./release\qextserialport_win.o
@@ -10,4 +15,6 @@ INPUT(
 ./release\moc_mainwindow.o
 ./release\moc_scope.o
 ./release\moc_qcustomplot.o
+./release\moc_form.o
+./release\moc_dialogdatabase.o
 );

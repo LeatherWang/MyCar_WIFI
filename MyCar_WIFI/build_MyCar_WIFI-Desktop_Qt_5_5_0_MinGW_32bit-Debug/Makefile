@@ -195,6 +195,7 @@ Makefile: ../MyCar_WIFI.pro D:/promile/QT/5.5/mingw492_32/mkspecs/win32-g++/qmak
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5Gui.prl \
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5Network.prl \
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5SerialPort.prl \
+		D:/promile/QT/5.5/mingw492_32/lib/Qt5Sql.prl \
 		D:/promile/QT/5.5/mingw492_32/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-g++ "CONFIG+=debug" -o Makefile ..\MyCar_WIFI.pro
 D:/promile/QT/5.5/mingw492_32/mkspecs/features/spec_pre.prf:
@@ -333,6 +334,7 @@ D:/promile/QT/5.5/mingw492_32/lib/Qt5Widgets.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5Gui.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5Network.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5SerialPort.prl:
+D:/promile/QT/5.5/mingw492_32/lib/Qt5Sql.prl:
 D:/promile/QT/5.5/mingw492_32/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-g++ "CONFIG+=debug" -o Makefile ..\MyCar_WIFI.pro

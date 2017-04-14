@@ -11,16 +11,25 @@ MainWindow::MainWindow(QWidget *parent) :
     zhentou[1] = 0XAF;
     ui->pushButton_linkTCP->setStyleSheet("background-color:rgb(145,200,200);");
     ui->pushButton_sendTCP->setStyleSheet("background-color:rgb(180,218,218);");
+    //    ui->pushButton_linkSer2net->setStyleSheet("background-color:rgb(145,200,200);");
+    //    ui->pushButton_sendSer2net->setStyleSheet("background-color:rgb(180,218,218);");
+
+    ui->pushButton_serialOpen->setStyleSheet("background-color:rgb(145,200,200);");
+    ui->pushButton_serialSend->setStyleSheet("background-color:rgb(180,218,218);");
 
     /*初始化TCP通信*/
     tcpSocket = new QTcpSocket(this);
     connect(tcpSocket,SIGNAL(readyRead()),this,SLOT(readTCPMessage()));
     connect(tcpSocket,SIGNAL(error(QAbstractSocket::SocketError)),
             this,SLOT(displayTCPError(QAbstractSocket::SocketError)));
-    ser2netSocket = new QTcpSocket(this);
-    connect(ser2netSocket,SIGNAL(readyRead()),this,SLOT(readSer2netMessage()));
-    connect(ser2netSocket,SIGNAL(error(QAbstractSocket::SocketError)),
-            this,SLOT(displaySer2netError(QAbstractSocket::SocketError)));
+    connect(tcpSocket,SIGNAL(connected()),this,SLOT(connectFinish()));
+    tcp_number_recive = 0;
+
+    /*初始化ser2net通信*/
+    //    ser2netSocket = new QTcpSocket(this);
+    //    connect(ser2netSocket,SIGNAL(readyRead()),this,SLOT(readSer2netMessage()));
+    //    connect(ser2netSocket,SIGNAL(error(QAbstractSocket::SocketError)),
+    //            this,SLOT(displaySer2netError(QAbstractSocket::SocketError)));
 
     /*初始化串口*/
     m_Com = new QextSerialPort(QextSerialPort::EventDriven,this);
@@ -28,11 +37,47 @@ MainWindow::MainWindow(QWidget *parent) :
     m_Com_Monitor = new QextSerialEnumerator(); //串口监视器，发布串口增加、移除等信号
     m_Com_Monitor->setUpNotifications();
     foreach (QextPortInfo info, QextSerialEnumerator::getPorts()) //利用此循环将serialList显示在portBox中
-    //ui->portBox->addItem(info.portName);
-    //ui->portBox->setEditable(false); //set true to make sure user can input their own port name!
+    {
+        ui->comboBox_serialFind->addItem(info.portName);
+    }
+    ui->comboBox_serialFind->setEditable(false); //set true to make sure user can input their own port name!
+    connect(m_Com,SIGNAL(readyRead()),this,SLOT(readMyCom()));
+    connect(m_Com_Monitor,SIGNAL(deviceDiscovered(const QextPortInfo&)),this,SLOT(hasComDiscovered(const QextPortInfo&)));
+    connect(m_Com_Monitor,SIGNAL(deviceRemoved(const QextPortInfo&)),this,SLOT(hasComRemoved(const QextPortInfo&)));
+    connect(ui->comboBox_serialFind,SIGNAL(currentIndexChanged(QString)),this,SLOT(portName_changed(QString)));
+    serial_number_recive = 0;
+    serial_number_send = 0;
 
     /*初始化波形窗口*/
     myscope = new scope;
+
+    /*初始化地图窗口*/
+    myForm = new Form;
+    connect(myForm,SIGNAL(MyCarClickedSignal(quint16,quint16)),this,SLOT(MyCarClickedSlot(quint16,quint16)));
+
+    /*初始化数据库*/
+    if(QSqlDatabase::contains("xxx.db"))
+        db = QSqlDatabase::database("xxx.db");
+    else
+    {
+        db = QSqlDatabase::addDatabase("QSQLITE", "xxx.db");
+        db.setDatabaseName("xxx.db");//设置数据库名，这句话不能少
+        bool ok = db.open();         //尝试连接数据库
+        if(ok)
+            qDebug()<<"链接数据库成功";
+        else
+            qDebug()<<"链接数据库失败，因为"<<db.lastError().text();
+
+        QSqlQuery query(db);
+        bool success=query.exec("create table RSSIValueTable(id integer,RSSI1 integer,RSSI2 integer,RSSI3 integer,RSSI4 integer)");
+        if(success)
+            qDebug()<<"数据库表创建成功！\n";
+        else
+            qDebug()<<"数据库表创建失败或者已经存在！\n";
+    }
+
+    /*初始化查看数据库窗口*/
+    databaseDialog=new Dialogdatabase;
 }
 
 MainWindow::~MainWindow()
@@ -40,207 +85,57 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-bool openCloseFlag = false;
-void MainWindow::on_pushButton_linkTCP_clicked()
-{
-    if(openCloseFlag == false)
-    {
-        tcpSocket->abort(); //取消已有的连接
-        tcpSocket->connectToHost("192.168.10.1",
-                                 8082);//连接到主机，这里从界面获取主机地址和端口号
-        openCloseFlag = true;
-        ui->pushButton_linkTCP->setText("断开服务器");
-        ui->pushButton_linkTCP->setStyleSheet("background-color:rgb(255,128,128);");
-    }
-    else
-    {
-        tcpSocket->write("p");
-        tcpSocket->disconnectFromHost();
-        openCloseFlag = false;
-        ui->pushButton_linkTCP->setText("连接服务器");
-        ui->pushButton_linkTCP->setStyleSheet("background-color:rgb(145,200,200);");
-    }
-}
-
-void MainWindow::on_pushButton_sendTCP_clicked()
-{
-    tcpSocket->write(ui->lineEdit_sendTCP->text().toLatin1());
-}
-
 void MainWindow::on_pushButton_showScope_clicked()
 {
     myscope->show();
+    myscope->openFlag = true;
 }
 
-void MainWindow::on_pushButton_linkSer2net_clicked()
+void MainWindow::on_pushButton_openMap_clicked()
 {
-    ser2netSocket->abort(); //取消已有的连接
-    ser2netSocket->connectToHost("192.168.10.1",
-                                2001);//连接到主机，这里从界面获取主机地址和端口号
+    myForm->show();
+    myForm->openFlag = true;
 }
 
-void MainWindow::on_pushButton_sendSer2net_clicked()
+/*通过地图向地面车发送目标位置坐标*/
+void MainWindow::MyCarClickedSlot(quint16 x, quint16 y)
 {
-    ser2netSocket->write(ui->lineEdit_sendSer2net->text().toLatin1());
+    Leather_Data_Send(x,y,0x01);
 }
 
-void MainWindow::displayTCPError(QAbstractSocket::SocketError)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
-    qDebug() <<"error!"<< tcpSocket->errorString(); //输出错误信息
-    ui->messageLabel_linkTCPState->setText("<font color=red>error!!</font>"+tcpSocket->errorString());
+    Q_UNUSED(event);
+    QApplication* appl;
+    appl->quit();
 }
 
-void MainWindow::displaySer2netError(QAbstractSocket::SocketError)
+void MainWindow::on_pushButton_databaseOpen_clicked()
 {
-    qDebug() <<"error!"<< ser2netSocket->errorString(); //输出错误信息
-    ui->messageLabel_linkTCPState->setText("<font color=red>error!!</font>"+ser2netSocket->errorString());
+    databaseDialog->show();
 }
 
-#define BSSID_raw 3
-char BSSID[BSSID_raw][18]{"20:0c:c8:4a:df:fa","fc:d7:33:4a:5c:c8","14:cf:92:46:24:86"};//SSID:Robot-AN-101,Robot-IS-108,WW
-float RSSIValue[BSSID_raw]={0.0};
-QByteArray byteArray;
-void MainWindow::readTCPMessage()
+void MainWindow::saveToDatabase(char RSSI1, char RSSI2, char RSSI3, char RSSI4)
 {
-    if(tcpSocket->bytesAvailable()>0)
+    QSqlQuery query(db);
+
+    query.exec("select *from RSSIValueTable");
+    query.last(); //query指向结果集的最后一条记录
+    int ID = query.value(0).toString().toInt();
+
+    query.prepare("insert into RSSIValueTable values(:id,:RSSI1,:RSSI2,:RSSI3,:RSSI4)");
+        query.bindValue(":id",ID+1); //id自加一
+        query.bindValue(":RSSI1",RSSI1); //注意qstring类型！！！！！
+        query.bindValue(":RSSI2",RSSI2);
+        query.bindValue(":RSSI3",RSSI3);
+        query.bindValue(":RSSI4",RSSI4);
+
+    qDebug()<<ID+1<<RSSI1<<RSSI2<<RSSI3<<RSSI4;
+    bool success=query.exec();
+    if(!success)
     {
-        const QByteArray data = tcpSocket->readAll();
-        ui->textBrowser_acceptTCP->append(data);
-
-        for(quint8 i=0; i<BSSID_raw; i++)
-        {
-            if(data.indexOf(BSSID[i]) < 0)//判断此wifi是否在范围内
-            {
-                RSSIValue[i] = -99.0;
-            }
-            else
-            {
-                byteArray = data.mid(data.indexOf(BSSID[i]) , data.size()-data.indexOf(BSSID[i]));
-                RSSIValue[i] = byteArray.mid(byteArray.indexOf("signal:") + 8 , 6).toFloat();
-            }
-        }
-        qDebug()<<RSSIValue[0]<<RSSIValue[1]<<RSSIValue[2];
-
-        if(myscope->isActiveWindow())
-            myscope->showScope(RSSIValue[0] , RSSIValue[2]);
+        QSqlError lastError=query.lastError();
+        qDebug()<<lastError.driverText()<<"插入失败";
     }
+    //databaseShowDataSlot();
 }
-
-QByteArray serialByteArray;
-void MainWindow::readSer2netMessage()
-{
-    if(ser2netSocket->bytesAvailable()>0)
-    {
-        const QByteArray data = ser2netSocket->readAll();
-        m_number_recive += data.size();
-        QString str;
-        for(int i=0;i<data.size();i++)
-        {
-            if(QString::number(quint8(data.at(i)),16).toUpper().length()==1)//16进制字母均大写
-                str.append(QString("0")+QString::number(quint8(data.at(i)),16).toUpper()+QString(" "));
-            else
-                str.append(QString::number(quint8(data.at(i)),16).toUpper()+QString(" "));
-        }
-        //ui->textBrowserSerial->insertHtml(toBlueText(str));
-        ui->textBrowser_acceptSer2net->append(str);
-
-        /****************************** Start user code for include. **********************************/
-        serialByteArray.append(data);
-
-        if(serialByteArray.size() >= 9)//DONE!!
-        {
-            // qDebug()<<byteArray;
-            if(serialByteArray.contains(zhentou))
-            {
-                QByteArray byteArray_1 =  serialByteArray.mid(serialByteArray.indexOf(zhentou),4);//第四位为数据长度，非帧长度，帧长度=数据长度+5
-                byteArray_1 = serialByteArray.mid(serialByteArray.indexOf(zhentou),byteArray_1.at(3)+5);
-                //                    qDebug()<<byteArray_1<<"  ";
-                Leather_Data_Receive(byteArray_1);
-            }
-            serialByteArray.clear();
-        }
-        /********************************* End user code. *********************************************/
-    }
-}
-
-
-
-
-
-#include "math.h"
-typedef union
-{
-    quint16 sum;//int = qint32
-    quint8 son[2];
-} MyUnion;
-MyUnion Union_dataBuf;
-quint16 Position_A,Position_B;
-void MainWindow::Leather_Data_Receive(QByteArray data)
-{
-    quint8 sum = 0;
-    quint8 num = data.size();
-    for(quint8 i=0;i<(num-1);i++)
-        sum += (quint8(data.at(i)));
-    if(!(sum == quint8(data.at(num-1))))	return;		//判断sum，校验--Leather
-    if(!(quint8(data.at(0))==0xAA && quint8(data.at(1))==0xAF))		return;		//判断帧头--Leather
-
-    if(quint8(data.at(2)) == 0X01)
-    {
-        Union_dataBuf.son[1] = quint8(data.at(4));
-        Union_dataBuf.son[0] = quint8(data.at(5));
-        Position_A = Union_dataBuf.sum;
-
-        Union_dataBuf.son[1] = quint8(data.at(6));
-        Union_dataBuf.son[0] = quint8(data.at(7));
-        Position_B = Union_dataBuf.sum;
-        qDebug()<<Position_A<<Position_B;
-        //myForm->MyCarComeBack(Position_A,Position_B);
-    }
-}
-
-/********************************************************
-  *类型：私有函数
-  *功能：替换特殊字符，帮助html显示
-  ****************************************************/
-void MainWindow::stringToHtmlFilter(QString &str)
-{
-    //注意这几行代码的顺序不能乱，否则会造成多次替换
-    str.replace("&","&amp;");
-    str.replace(">","&gt;");
-    str.replace("<","&lt;");
-    str.replace("\"","&quot;");
-    str.replace("\'","&#39;");
-    str.replace(" ","&nbsp;");
-    str.replace("\n","<br>");
-    str.replace("\r","<br>");
-}
-
-/********************************************************
-  *类型：私有函数
-  *功能：将替换特殊字符后的QString转换成对应颜色显示的html
-  ****************************************************/
-void MainWindow::stringToHtml(QString &str,QColor crl)
-{
-    QByteArray array;
-    array.append(crl.red());
-    array.append(crl.green());
-    array.append(crl.blue());
-    QString strC(array.toHex());
-    str = QString("<span style=\" color:#%1;\">%2</span>").arg(strC).arg(str);
-}
-
-/*******************************************************
-  *类型：私有函数
-  *功能：将一个文本字符串转换成蓝色的html文本颜色
-        并换行
-  ******************************************************/
-QString MainWindow::toBlueText(QString str)
-{
-    QColor crl(0,0,255);
-    stringToHtmlFilter(str);
-    stringToHtml(str,crl);
-    return str;
-}
-
-
-

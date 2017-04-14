@@ -3,6 +3,11 @@ INPUT(
 ./debug\mainwindow.o
 ./debug\scope.o
 ./debug\qcustomplot.o
+./debug\tcpsocket.o
+./debug\serialtalk.o
+./debug\form.o
+./debug\dialogdatabase.o
+./debug\algorithm.o
 ./debug\qextserialport.o
 ./debug\qextserialenumerator.o
 ./debug\qextserialport_win.o
@@ -10,4 +15,6 @@ INPUT(
 ./debug\moc_mainwindow.o
 ./debug\moc_scope.o
 ./debug\moc_qcustomplot.o
+./debug\moc_form.o
+./debug\moc_dialogdatabase.o
 );
