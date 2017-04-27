@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "math.h"
 
 /****************************************
@@ -82,14 +81,14 @@ void MainWindow::readMyCom()    //读串口发来的数据，并显示出来
             /****************************** Start user code for include. **********************************/
             serialByteArray.append(data);
 
-            if(serialByteArray.size() >= 9)//DONE!!
+            if(serialByteArray.size() >= 13)//DONE!!
             {
-                // qDebug()<<byteArray;
+                // qDebug()<<serialByteArray;
                 if(serialByteArray.contains(zhentou))
                 {
                     QByteArray byteArray_1 =  serialByteArray.mid(serialByteArray.indexOf(zhentou),4);//第四位为数据长度，非帧长度，帧长度=数据长度+5
                     byteArray_1 = serialByteArray.mid(serialByteArray.indexOf(zhentou),byteArray_1.at(3)+5);
-                    //                    qDebug()<<byteArray_1<<"  ";
+                                       // qDebug()<<byteArray_1.size();
                     Leather_Data_Receive(byteArray_1);
                 }
                 serialByteArray.clear();
@@ -104,13 +103,26 @@ void MainWindow::readMyCom()    //读串口发来的数据，并显示出来
     }
 }
 
+#define BYTE0(dwTemp)       ( *( (quint8 *)(&dwTemp)	) )
+#define BYTE1(dwTemp)       ( *( (quint8 *)(&dwTemp) + 1) )//beautiful--Leather
+#define BYTE2(dwTemp)       ( *( (quint8 *)(&dwTemp) + 2) )
+#define BYTE3(dwTemp)       ( *( (quint8 *)(&dwTemp) + 3) )
 typedef union
 {
-    quint16 sum;//int = qint32
+    qint16 sum;//int = qint32
     quint8 son[2];
 } MyUnion;
 MyUnion Union_dataBuf;
-quint16 Position_A,Position_B;
+
+typedef union
+{
+    float sum;//int = qint32
+    quint8 son[4];
+} UnionFloat;
+UnionFloat unionFloat;
+
+qint16 Position_X, Position_Y;
+float Position_Z;
 void MainWindow::Leather_Data_Receive(QByteArray data)
 {
     quint8 sum = 0;
@@ -124,23 +136,28 @@ void MainWindow::Leather_Data_Receive(QByteArray data)
     {
         Union_dataBuf.son[1] = quint8(data.at(4));
         Union_dataBuf.son[0] = quint8(data.at(5));
-        Position_A = Union_dataBuf.sum;
+        Position_X = Union_dataBuf.sum;
 
         Union_dataBuf.son[1] = quint8(data.at(6));
         Union_dataBuf.son[0] = quint8(data.at(7));
-        Position_B = Union_dataBuf.sum;
-        qDebug()<<Position_A<<Position_B;
+        Position_Y = Union_dataBuf.sum;
+
+        unionFloat.son[3] = quint8(data.at(8));
+        unionFloat.son[2] = quint8(data.at(9));
+        unionFloat.son[1] = quint8(data.at(10));
+        unionFloat.son[0] = quint8(data.at(11));
+        Position_Z = unionFloat.sum;
+
+        //qDebug()<<Position_Z;
         if(myForm->openFlag == true)
         {
-            myForm->MyCarComeBack(Position_A,Position_B);//调用地图显示
+            myForm->MyCarComeBack(Position_X, Position_Y, Position_Z);//调用地图显示
         }
     }
 }
 
 /****************************** Start user code for include. **********************************/
-#define BYTE0(dwTemp)       ( *( (quint8 *)(&dwTemp)    ) )
-#define BYTE1(dwTemp)       ( *( (quint8 *)(&dwTemp) + 1) )//beautiful--Leather
-void MainWindow::Leather_Data_Send(quint16 posionX, quint16 posionY, quint8 flag)
+void MainWindow::Leather_Data_Send(qint16 posionX, qint16 posionY, float positionZ, quint8 flag)
 {
     QByteArray array;
     qDebug()<<posionX<<posionY;
@@ -158,6 +175,11 @@ void MainWindow::Leather_Data_Send(quint16 posionX, quint16 posionY, quint8 flag
     array[_cnt++]=BYTE1(posionY);
     array[_cnt++]=BYTE0(posionY);
 
+    array[_cnt++]=BYTE3(positionZ);
+    array[_cnt++]=BYTE2(positionZ);
+    array[_cnt++]=BYTE1(positionZ);
+    array[_cnt++]=BYTE0(positionZ);
+
     array[3] = _cnt-4;
 
     for(i=0;i<_cnt;i++)
@@ -165,7 +187,8 @@ void MainWindow::Leather_Data_Send(quint16 posionX, quint16 posionY, quint8 flag
 
     array[_cnt++]=sum;
 
-    m_Com->write(array);
+    if(m_Com->isOpen())
+        m_Com->write(array);
 }
 
 /********************************* End user code. *********************************************/

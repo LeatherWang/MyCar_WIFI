@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>img/axid.PNG</file>
+    </qresource>
+</RCC>

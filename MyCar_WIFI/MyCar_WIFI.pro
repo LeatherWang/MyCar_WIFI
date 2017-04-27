@@ -28,7 +28,8 @@ HEADERS  += \
     qcustomplot/qcustomplot.h \
     form.h \
     dialogdatabase.h \
-    algorithm.h
+    algorithm.h \
+    apinfo.h
 
 FORMS    += mainwindow.ui \
     scope.ui \
@@ -37,3 +38,6 @@ FORMS    += mainwindow.ui \
 include(./qextserialport-1.2beta2/src/qextserialport.pri)
 
 DISTFILES +=
+
+RESOURCES += \
+    image.qrc

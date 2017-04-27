@@ -26,7 +26,7 @@ public:
     enum Shape{Line,Rectangle,RoundRect,Ellipse,Polygon,Polyline,Points,Arc,Path,Text,Pixmap};
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
-    void MyCarComeBack(quint16 x,quint16 y);
+    void MyCarComeBack(qint16 x, qint16 y, float z);
 //    QPainter *painter;
 //    void mouseMoveEvent(QMouseEvent *);
 //    void mouseReleaseEvent(QMouseEvent *);
@@ -49,17 +49,20 @@ private:
 
     QPixmap pix;
     QPoint lastPoint;
-    QPoint endPoint,endPoint_1;
+    QPoint endPoint,currentPoint;
 
     quint16 PixMapWidth;
     quint16 PixMapHeight;
 
+    quint16 sendCounter;
+
 signals:
-    void MyCarClickedSignal(quint16,quint16);
+    void MyCarClickedSignal(qint16, qint16, float);
 
 private slots:
     void on_back_pushButton_clicked();
     void on_clear_pushButton_clicked();
+    void on_pushButton_sendTargetPosition_clicked();
 };
 
 #endif // FORM_H

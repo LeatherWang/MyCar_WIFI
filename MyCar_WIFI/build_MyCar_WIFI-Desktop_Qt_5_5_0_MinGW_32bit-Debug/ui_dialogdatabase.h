@@ -17,6 +17,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
 
@@ -28,15 +29,17 @@ public:
     QHBoxLayout *horizontalLayout;
     QTableView *tableView;
     QVBoxLayout *verticalLayout;
-    QPushButton *pushButton;
-    QPushButton *deletepushButton;
-    QPushButton *refreshpushButton;
+    QPushButton *pushButton_dbAddData;
+    QPushButton *pushButton_dbDeleteData;
+    QPushButton *pushButton_dbRefresh;
+    QSpacerItem *verticalSpacer;
+    QPushButton *pushButton_dbDeleteAll;
 
     void setupUi(QDialog *Dialogdatabase)
     {
         if (Dialogdatabase->objectName().isEmpty())
             Dialogdatabase->setObjectName(QStringLiteral("Dialogdatabase"));
-        Dialogdatabase->resize(800, 480);
+        Dialogdatabase->resize(808, 480);
         Dialogdatabase->setMinimumSize(QSize(800, 480));
         horizontalLayout = new QHBoxLayout(Dialogdatabase);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
@@ -47,28 +50,52 @@ public:
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        pushButton = new QPushButton(Dialogdatabase);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton_dbAddData = new QPushButton(Dialogdatabase);
+        pushButton_dbAddData->setObjectName(QStringLiteral("pushButton_dbAddData"));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(pushButton_dbAddData->sizePolicy().hasHeightForWidth());
+        pushButton_dbAddData->setSizePolicy(sizePolicy);
+        pushButton_dbAddData->setMinimumSize(QSize(75, 40));
 
-        verticalLayout->addWidget(pushButton);
+        verticalLayout->addWidget(pushButton_dbAddData);
 
-        deletepushButton = new QPushButton(Dialogdatabase);
-        deletepushButton->setObjectName(QStringLiteral("deletepushButton"));
+        pushButton_dbDeleteData = new QPushButton(Dialogdatabase);
+        pushButton_dbDeleteData->setObjectName(QStringLiteral("pushButton_dbDeleteData"));
+        pushButton_dbDeleteData->setMinimumSize(QSize(75, 40));
 
-        verticalLayout->addWidget(deletepushButton);
+        verticalLayout->addWidget(pushButton_dbDeleteData);
 
-        refreshpushButton = new QPushButton(Dialogdatabase);
-        refreshpushButton->setObjectName(QStringLiteral("refreshpushButton"));
+        pushButton_dbRefresh = new QPushButton(Dialogdatabase);
+        pushButton_dbRefresh->setObjectName(QStringLiteral("pushButton_dbRefresh"));
+        pushButton_dbRefresh->setMinimumSize(QSize(75, 40));
 
-        verticalLayout->addWidget(refreshpushButton);
+        verticalLayout->addWidget(pushButton_dbRefresh);
+
+        verticalSpacer = new QSpacerItem(20, 128, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
+        pushButton_dbDeleteAll = new QPushButton(Dialogdatabase);
+        pushButton_dbDeleteAll->setObjectName(QStringLiteral("pushButton_dbDeleteAll"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(pushButton_dbDeleteAll->sizePolicy().hasHeightForWidth());
+        pushButton_dbDeleteAll->setSizePolicy(sizePolicy1);
+        pushButton_dbDeleteAll->setMinimumSize(QSize(85, 40));
+
+        verticalLayout->addWidget(pushButton_dbDeleteAll);
 
 
         horizontalLayout->addLayout(verticalLayout);
 
-        deletepushButton->raise();
-        refreshpushButton->raise();
         tableView->raise();
-        pushButton->raise();
+        pushButton_dbAddData->raise();
+        pushButton_dbDeleteData->raise();
+        pushButton_dbDeleteAll->raise();
+        pushButton_dbRefresh->raise();
 
         retranslateUi(Dialogdatabase);
 
@@ -78,9 +105,10 @@ public:
     void retranslateUi(QDialog *Dialogdatabase)
     {
         Dialogdatabase->setWindowTitle(QApplication::translate("Dialogdatabase", "Dialog", 0));
-        pushButton->setText(QApplication::translate("Dialogdatabase", "\346\267\273\345\212\240\346\225\260\346\215\256", 0));
-        deletepushButton->setText(QApplication::translate("Dialogdatabase", "\345\210\240\351\231\244\346\225\260\346\215\256", 0));
-        refreshpushButton->setText(QApplication::translate("Dialogdatabase", "\345\210\267\346\226\260\346\225\260\346\215\256", 0));
+        pushButton_dbAddData->setText(QApplication::translate("Dialogdatabase", "\346\267\273\345\212\240\346\225\260\346\215\256", 0));
+        pushButton_dbDeleteData->setText(QApplication::translate("Dialogdatabase", "\345\210\240\351\231\244\346\225\260\346\215\256", 0));
+        pushButton_dbRefresh->setText(QApplication::translate("Dialogdatabase", "\345\210\267\346\226\260\346\225\260\346\215\256", 0));
+        pushButton_dbDeleteAll->setText(QApplication::translate("Dialogdatabase", "\345\210\240\351\231\244\346\211\200\346\234\211\346\225\260\346\215\256", 0));
     } // retranslateUi
 
 };

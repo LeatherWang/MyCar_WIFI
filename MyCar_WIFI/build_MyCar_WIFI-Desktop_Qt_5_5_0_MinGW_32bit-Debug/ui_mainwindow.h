@@ -77,7 +77,9 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QPushButton *pushButton_databaseOpen;
     QPushButton *pushButton_showScope;
+    QHBoxLayout *horizontalLayout_7;
     QLabel *label_tcpReceive;
+    QPushButton *pushButton_TCPClearCount;
     QTextBrowser *textBrowser_acceptTCP;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -342,19 +344,35 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_2);
 
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
         label_tcpReceive = new QLabel(groupBox);
         label_tcpReceive->setObjectName(QStringLiteral("label_tcpReceive"));
-        label_tcpReceive->setMinimumSize(QSize(249, 0));
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_tcpReceive->sizePolicy().hasHeightForWidth());
+        label_tcpReceive->setSizePolicy(sizePolicy2);
+        label_tcpReceive->setMinimumSize(QSize(180, 0));
 
-        verticalLayout->addWidget(label_tcpReceive);
+        horizontalLayout_7->addWidget(label_tcpReceive);
+
+        pushButton_TCPClearCount = new QPushButton(groupBox);
+        pushButton_TCPClearCount->setObjectName(QStringLiteral("pushButton_TCPClearCount"));
+
+        horizontalLayout_7->addWidget(pushButton_TCPClearCount);
+
+
+        verticalLayout->addLayout(horizontalLayout_7);
 
         textBrowser_acceptTCP = new QTextBrowser(groupBox);
         textBrowser_acceptTCP->setObjectName(QStringLiteral("textBrowser_acceptTCP"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(textBrowser_acceptTCP->sizePolicy().hasHeightForWidth());
-        textBrowser_acceptTCP->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(textBrowser_acceptTCP->sizePolicy().hasHeightForWidth());
+        textBrowser_acceptTCP->setSizePolicy(sizePolicy3);
         textBrowser_acceptTCP->setMinimumSize(QSize(0, 0));
         textBrowser_acceptTCP->setMaximumSize(QSize(16777215, 16777215));
 
@@ -412,6 +430,7 @@ public:
         pushButton_databaseOpen->setText(QApplication::translate("MainWindow", "\346\211\223\345\274\200\346\225\260\346\215\256\345\272\223", 0));
         pushButton_showScope->setText(QApplication::translate("MainWindow", "\346\237\245\347\234\213\346\263\242\345\275\242", 0));
         label_tcpReceive->setText(QApplication::translate("MainWindow", "**", 0));
+        pushButton_TCPClearCount->setText(QApplication::translate("MainWindow", "\346\270\205\351\231\244\350\256\241\346\225\260", 0));
         menu->setTitle(QApplication::translate("MainWindow", "\350\217\234\345\215\225", 0));
     } // retranslateUi
 

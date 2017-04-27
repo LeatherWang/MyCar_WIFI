@@ -43,16 +43,16 @@ private:
     void stringToHtml(QString &str,QColor crl);
     QString toBlueText(QString str);
     void Leather_Data_Receive(QByteArray data);
-    void Leather_Data_Send(quint16 posionX, quint16 posionY, quint8 flag);
+    void Leather_Data_Send(qint16 posionX, qint16 posionY, float positionZ, quint8 flag);
 
     scope *myscope;
 
     Form *myForm;
 
     Dialogdatabase *databaseDialog;
-    QSqlDatabase db;
-    QSqlQuery query;
-    void saveToDatabase(char RSSI1, char RSSI2, char RSSI3, char RSSI4);
+//    QSqlDatabase db;
+//    QSqlQuery query;
+//    void saveToDatabase(char RSSI1, char RSSI2, char RSSI3, char RSSI4);
 
     Algorithm algorithm;
 
@@ -88,9 +88,14 @@ private slots:
     void on_checkBox_serialSendHex_clicked();
 
     void on_pushButton_openMap_clicked();
-    void MyCarClickedSlot(quint16 x,quint16 y);
+    void MyCarClickedSlot(qint16 x, qint16 y, float z);
     void on_pushButton_databaseOpen_clicked();
+    void on_pushButton_TCPClearCount_clicked();
 
+    void RSSISaveSlot(quint8 index);
+
+    double ComputeP_S_Ri(quint16 id, float *rssiValue);
+    void ComputeP_S_Rn(float *rssiValue);
 };
 
 #endif // MAINWINDOW_H

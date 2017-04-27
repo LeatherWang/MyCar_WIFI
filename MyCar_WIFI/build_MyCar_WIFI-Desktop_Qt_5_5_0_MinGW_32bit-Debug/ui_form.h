@@ -18,6 +18,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -55,41 +56,47 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *label_3;
     QLabel *startY_label;
-    QLabel *label_12;
     QWidget *layoutWidget2;
     QHBoxLayout *horizontalLayout_7;
-    QLabel *label_10;
-    QLabel *endA_label;
     QFrame *line;
     QGroupBox *groupBox_2;
-    QWidget *layoutWidget3;
-    QVBoxLayout *verticalLayout_4;
+    QLineEdit *lineEdit_tragetX;
+    QLabel *label_10;
+    QLineEdit *lineEdit_tragetY;
+    QLabel *label_14;
+    QPushButton *pushButton_sendTargetPosition;
+    QLabel *label_sendCounter;
     QPushButton *back_pushButton;
     QPushButton *clear_pushButton;
+    QLineEdit *lineEdit_tragetZ;
+    QLabel *label_15;
+    QLabel *label_13;
     QLabel *label_11;
+    QLabel *endA_label;
+    QLabel *label_12;
 
     void setupUi(QWidget *Form)
     {
         if (Form->objectName().isEmpty())
             Form->setObjectName(QStringLiteral("Form"));
-        Form->resize(810, 700);
+        Form->resize(815, 700);
         groupBox = new QGroupBox(Form);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(706, 20, 100, 350));
-        groupBox->setMinimumSize(QSize(100, 350));
+        groupBox->setGeometry(QRect(710, 10, 100, 291));
+        groupBox->setMinimumSize(QSize(0, 0));
         groupBox->setMaximumSize(QSize(100, 350));
         label = new QLabel(groupBox);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 250, 54, 12));
+        label->setGeometry(QRect(10, 170, 54, 12));
         label_6 = new QLabel(groupBox);
         label_6->setObjectName(QStringLiteral("label_6"));
         label_6->setGeometry(QRect(10, 30, 54, 12));
         label_9 = new QLabel(groupBox);
         label_9->setObjectName(QStringLiteral("label_9"));
-        label_9->setGeometry(QRect(10, 110, 54, 12));
+        label_9->setGeometry(QRect(10, 100, 54, 12));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 130, 76, 44));
+        layoutWidget->setGeometry(QRect(20, 120, 76, 44));
         verticalLayout_2 = new QVBoxLayout(layoutWidget);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -129,7 +136,7 @@ public:
 
         layoutWidget_2 = new QWidget(groupBox);
         layoutWidget_2->setObjectName(QStringLiteral("layoutWidget_2"));
-        layoutWidget_2->setGeometry(QRect(20, 270, 76, 44));
+        layoutWidget_2->setGeometry(QRect(20, 190, 76, 44));
         verticalLayout_3 = new QVBoxLayout(layoutWidget_2);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -207,25 +214,12 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_2);
 
-        label_12 = new QLabel(groupBox);
-        label_12->setObjectName(QStringLiteral("label_12"));
-        label_12->setGeometry(QRect(10, 190, 54, 12));
         layoutWidget2 = new QWidget(groupBox);
         layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
         layoutWidget2->setGeometry(QRect(0, 0, 74, 18));
         horizontalLayout_7 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
         horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
-        label_10 = new QLabel(layoutWidget2);
-        label_10->setObjectName(QStringLiteral("label_10"));
-        label_10->setMinimumSize(QSize(16, 16));
-
-        horizontalLayout_7->addWidget(label_10);
-
-        endA_label = new QLabel(groupBox);
-        endA_label->setObjectName(QStringLiteral("endA_label"));
-        endA_label->setGeometry(QRect(30, 210, 50, 16));
-        endA_label->setMinimumSize(QSize(50, 16));
         line = new QFrame(Form);
         line->setObjectName(QStringLiteral("line"));
         line->setGeometry(QRect(705, 0, 3, 700));
@@ -233,35 +227,61 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         groupBox_2 = new QGroupBox(Form);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(710, 410, 91, 141));
-        layoutWidget3 = new QWidget(groupBox_2);
-        layoutWidget3->setObjectName(QStringLiteral("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(10, 20, 72, 108));
-        verticalLayout_4 = new QVBoxLayout(layoutWidget3);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
-        back_pushButton = new QPushButton(layoutWidget3);
+        groupBox_2->setGeometry(QRect(710, 300, 101, 261));
+        lineEdit_tragetX = new QLineEdit(groupBox_2);
+        lineEdit_tragetX->setObjectName(QStringLiteral("lineEdit_tragetX"));
+        lineEdit_tragetX->setGeometry(QRect(30, 20, 61, 20));
+        label_10 = new QLabel(groupBox_2);
+        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setGeometry(QRect(10, 20, 16, 21));
+        lineEdit_tragetY = new QLineEdit(groupBox_2);
+        lineEdit_tragetY->setObjectName(QStringLiteral("lineEdit_tragetY"));
+        lineEdit_tragetY->setGeometry(QRect(30, 50, 61, 20));
+        label_14 = new QLabel(groupBox_2);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        label_14->setGeometry(QRect(10, 50, 16, 21));
+        pushButton_sendTargetPosition = new QPushButton(groupBox_2);
+        pushButton_sendTargetPosition->setObjectName(QStringLiteral("pushButton_sendTargetPosition"));
+        pushButton_sendTargetPosition->setGeometry(QRect(30, 110, 61, 23));
+        label_sendCounter = new QLabel(groupBox_2);
+        label_sendCounter->setObjectName(QStringLiteral("label_sendCounter"));
+        label_sendCounter->setGeometry(QRect(10, 140, 91, 16));
+        back_pushButton = new QPushButton(groupBox_2);
         back_pushButton->setObjectName(QStringLiteral("back_pushButton"));
-        back_pushButton->setMinimumSize(QSize(70, 50));
-        back_pushButton->setMaximumSize(QSize(70, 50));
-
-        verticalLayout_4->addWidget(back_pushButton);
-
-        clear_pushButton = new QPushButton(layoutWidget3);
+        back_pushButton->setGeometry(QRect(10, 160, 80, 40));
+        back_pushButton->setMinimumSize(QSize(70, 0));
+        back_pushButton->setMaximumSize(QSize(200, 50));
+        clear_pushButton = new QPushButton(groupBox_2);
         clear_pushButton->setObjectName(QStringLiteral("clear_pushButton"));
-        clear_pushButton->setMinimumSize(QSize(70, 50));
-        clear_pushButton->setMaximumSize(QSize(70, 50));
-
-        verticalLayout_4->addWidget(clear_pushButton);
-
+        clear_pushButton->setGeometry(QRect(10, 210, 80, 40));
+        clear_pushButton->setMinimumSize(QSize(70, 0));
+        clear_pushButton->setMaximumSize(QSize(200, 50));
+        lineEdit_tragetZ = new QLineEdit(groupBox_2);
+        lineEdit_tragetZ->setObjectName(QStringLiteral("lineEdit_tragetZ"));
+        lineEdit_tragetZ->setGeometry(QRect(30, 80, 61, 20));
+        label_15 = new QLabel(groupBox_2);
+        label_15->setObjectName(QStringLiteral("label_15"));
+        label_15->setGeometry(QRect(10, 80, 16, 21));
+        label_13 = new QLabel(Form);
+        label_13->setObjectName(QStringLiteral("label_13"));
+        label_13->setGeometry(QRect(720, 570, 91, 91));
+        label_13->setPixmap(QPixmap(QString::fromUtf8(":/image/img/axid.PNG")));
+        label_13->setScaledContents(true);
         label_11 = new QLabel(Form);
         label_11->setObjectName(QStringLiteral("label_11"));
-        label_11->setGeometry(QRect(720, 570, 71, 71));
+        label_11->setGeometry(QRect(720, 670, 71, 21));
         QFont font;
+        font.setPointSize(11);
         font.setBold(true);
-        font.setUnderline(false);
         font.setWeight(75);
         label_11->setFont(font);
+        endA_label = new QLabel(Form);
+        endA_label->setObjectName(QStringLiteral("endA_label"));
+        endA_label->setGeometry(QRect(740, 270, 50, 16));
+        endA_label->setMinimumSize(QSize(50, 16));
+        label_12 = new QLabel(Form);
+        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setGeometry(QRect(720, 250, 54, 12));
 
         retranslateUi(Form);
 
@@ -272,7 +292,7 @@ public:
     {
         Form->setWindowTitle(QApplication::translate("Form", "Form", 0));
         groupBox->setTitle(QApplication::translate("Form", "\345\260\217\350\275\246\344\277\241\346\201\257", 0));
-        label->setText(QApplication::translate("Form", "\344\275\215\347\275\256\357\274\232", 0));
+        label->setText(QApplication::translate("Form", "\345\256\236\346\227\266\344\275\215\347\275\256\357\274\232", 0));
         label_6->setText(QApplication::translate("Form", "\350\265\267\347\202\271\357\274\232", 0));
         label_9->setText(QApplication::translate("Form", "\347\273\210\347\202\271\357\274\232", 0));
         label_4->setText(QApplication::translate("Form", "X:", 0));
@@ -287,16 +307,21 @@ public:
         startX_label->setText(QApplication::translate("Form", "0", 0));
         label_3->setText(QApplication::translate("Form", "Y:", 0));
         startY_label->setText(QApplication::translate("Form", "0", 0));
-        label_12->setText(QApplication::translate("Form", "\350\247\222\345\272\246\357\274\232", 0));
-        label_10->setText(QApplication::translate("Form", "A:", 0));
-        endA_label->setText(QApplication::translate("Form", "\346\234\252\347\237\245", 0));
         groupBox_2->setTitle(QApplication::translate("Form", "\346\216\247\345\210\266\345\231\250", 0));
+        lineEdit_tragetX->setText(QApplication::translate("Form", "0", 0));
+        label_10->setText(QApplication::translate("Form", "X:", 0));
+        lineEdit_tragetY->setText(QApplication::translate("Form", "0", 0));
+        label_14->setText(QApplication::translate("Form", "Y:", 0));
+        pushButton_sendTargetPosition->setText(QApplication::translate("Form", "\345\217\221\351\200\201", 0));
+        label_sendCounter->setText(QApplication::translate("Form", "\345\267\262\345\217\221\351\200\2010\345\270\247", 0));
         back_pushButton->setText(QApplication::translate("Form", "\345\233\236\345\210\260\345\216\237\347\202\271", 0));
         clear_pushButton->setText(QApplication::translate("Form", "\346\270\205\351\231\244\350\275\250\350\277\271", 0));
-        label_11->setText(QApplication::translate("Form", "\346\217\220\347\244\272\357\274\232\n"
-"Y\350\275\264\346\255\243\346\226\271\345\220\221\344\270\272\n"
-" \345\200\222\344\270\211\350\247\222\346\234\235\345\220\221\n"
-"", 0));
+        lineEdit_tragetZ->setText(QApplication::translate("Form", "0", 0));
+        label_15->setText(QApplication::translate("Form", "Z:", 0));
+        label_13->setText(QString());
+        label_11->setText(QApplication::translate("Form", "\345\215\225\344\275\215\357\274\232cm", 0));
+        endA_label->setText(QApplication::translate("Form", "\346\234\252\347\237\245", 0));
+        label_12->setText(QApplication::translate("Form", "\350\247\222\345\272\246\357\274\232", 0));
     } // retranslateUi
 
 };

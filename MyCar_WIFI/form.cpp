@@ -8,7 +8,7 @@ Form::Form(QWidget *parent) :
     ui->setupUi(this);
     setPalette(QPalette(Qt::white));//窗口背景设置
     setAutoFillBackground(true);
-    setFixedSize(810,700);
+    setFixedSize(820,700);
     setAttribute(Qt::WA_QuitOnClose,false);//主窗口关闭其跟着一起关闭
 
     PixMapWidth = 700;
@@ -32,11 +32,12 @@ Form::Form(QWidget *parent) :
 
     shape = Form::Shape(10);//0->Line, 1->Rct
 
-    endPoint = lastPoint = QPoint(pix.width()/2,pix.height()/2);//起始点坐标，画面中心
+    endPoint = lastPoint = QPoint(0, 0);//起始点坐标，左上角
     ui->startX_label->setText(QString::number(lastPoint.x(),10));
     ui->startY_label->setText(QString::number(lastPoint.y(),10));
 
     openFlag = false;
+    sendCounter =0;
 }
 
 Form::~Form()
@@ -44,7 +45,7 @@ Form::~Form()
     delete ui;
 }
 
-void Form::mousePressEvent(QMouseEvent *event)
+void Form::mousePressEvent(QMouseEvent *event)//单击发送
 {
     if((event->button()==Qt::LeftButton)&&(event->pos().x()<=pix.width())) //鼠标左键按下
     {
@@ -53,16 +54,35 @@ void Form::mousePressEvent(QMouseEvent *event)
         ui->startY_label->setText(QString::number(lastPoint.y(),10));
         ui->endX_label->setText(QString::number(endPoint.x(),10));
         ui->endY_label->setText(QString::number(endPoint.y(),10));
-//        ui->endA_label->setText();
         update();
-        emit MyCarClickedSignal(quint16(endPoint.x()),quint16(endPoint.y()));//0~700
+        emit MyCarClickedSignal(quint16(endPoint.x()), quint16(endPoint.y()), ui->lineEdit_tragetZ->text().toFloat());//-350~+350
+    }
+}
+
+void Form::on_pushButton_sendTargetPosition_clicked()//手动发送
+{
+    if(!ui->lineEdit_tragetX->text().isEmpty() && !ui->lineEdit_tragetY->text().isEmpty() && !ui->lineEdit_tragetZ->text().isEmpty())
+    {
+        sendCounter++;
+        ui->label_sendCounter->setText(QString("已发送%1帧").arg(sendCounter));
+
+        endPoint = QPoint(ui->lineEdit_tragetX->text().toInt(), ui->lineEdit_tragetY->text().toInt());
+        ui->startX_label->setText(QString::number(lastPoint.x(),10));
+        ui->startY_label->setText(QString::number(lastPoint.y(),10));
+        ui->endX_label->setText(QString::number(endPoint.x(),10));
+        ui->endY_label->setText(QString::number(endPoint.y(),10));
+        update();
+        emit MyCarClickedSignal(qint16(endPoint.x()), qint16(endPoint.y()), ui->lineEdit_tragetZ->text().toFloat());//-350~+350
     }
 }
 
 bool ComeBackFlag = false;
-void Form::MyCarComeBack(quint16 x, quint16 y)
+void Form::MyCarComeBack(qint16 x, qint16 y, float z)
 {
-    endPoint_1 = QPoint(x,y);
+    currentPoint = QPoint(x,y);//变换到窗口坐标系 0~700
+    ui->positionX_label->setText(QString::number(currentPoint.x(),10));
+    ui->positionY_label->setText(QString::number(currentPoint.y(),10));
+    ui->endA_label->setText(QString::number((double)z, 'g', 4));
     ComeBackFlag = true;
     update();
 }
@@ -78,7 +98,7 @@ void Form::paintEvent(QPaintEvent *)
     QPainter painter(this);
 
     QPainter pp(&pix);
-    if(ComeBackFlag == true)
+    if(ComeBackFlag == true)//实线
     {
         color = QColor(195,0,0);//画笔颜色
         value = 3;
@@ -86,10 +106,10 @@ void Form::paintEvent(QPaintEvent *)
         pen = QPen(color,value,style,cap,join);
         pp.setPen(pen);
         ComeBackFlag = false;
-        pp.drawLine(lastPoint, endPoint_1);//绘制连续的线段
-        lastPoint = endPoint_1;
+        pp.drawLine(lastPoint, currentPoint);//绘制连续的线段
+        lastPoint = currentPoint;
     }
-    else
+    else//点画线
     {
         color = QColor(0,0,255);//画笔颜色
         value = 2;
@@ -134,13 +154,13 @@ void Form::paintEvent(QPaintEvent *)
 
 void Form::on_back_pushButton_clicked()
 {
-    endPoint = QPoint(pix.width()/2,pix.height()/2);
+    endPoint = QPoint(0, 0);
     ui->startX_label->setText(QString::number(lastPoint.x(),10));
     ui->startY_label->setText(QString::number(lastPoint.y(),10));
     ui->endX_label->setText(QString::number(endPoint.x(),10));
     ui->endY_label->setText(QString::number(endPoint.y(),10));
     update();
-    emit MyCarClickedSignal(quint16(endPoint.x()),quint16(endPoint.y()));
+    emit MyCarClickedSignal(quint16(endPoint.x()), quint16(endPoint.y()), ui->lineEdit_tragetZ->text().toFloat());
 }
 
 void Form::on_clear_pushButton_clicked()

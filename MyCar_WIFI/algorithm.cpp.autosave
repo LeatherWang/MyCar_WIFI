@@ -140,19 +140,3 @@ double Algorithm::KalmanFilter_2(double Now_Measure)
     return Actual_optimal;
 }
 
-#define APNumber 4
-/*******************************************
-*函数功能：计算P_S_Ri
-  *****************************************/
-double Algorithm::ComputeP_S_Ri(quint16 index)
-{
-    double Avg_u[APNumber], Dev_o[APNumber];
-    for(quint8 i=0; i<APNumber; i++)
-    {
-        Avg_u[i] =
-
-
-    }
-
-
-}

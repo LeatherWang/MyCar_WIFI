@@ -50,33 +50,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /*初始化波形窗口*/
     myscope = new scope;
+    connect(myscope,SIGNAL(RSSISaveSingal(quint8)),this,SLOT(RSSISaveSlot(quint8)));
 
     /*初始化地图窗口*/
     myForm = new Form;
-    connect(myForm,SIGNAL(MyCarClickedSignal(quint16,quint16)),this,SLOT(MyCarClickedSlot(quint16,quint16)));
+    connect(myForm,SIGNAL(MyCarClickedSignal(qint16,qint16,float)),this,SLOT(MyCarClickedSlot(qint16,qint16,float)));
 
-    /*初始化数据库*/
-    if(QSqlDatabase::contains("xxx.db"))
-        db = QSqlDatabase::database("xxx.db");
-    else
-    {
-        db = QSqlDatabase::addDatabase("QSQLITE", "xxx.db");
-        db.setDatabaseName("xxx.db");//设置数据库名，这句话不能少
-        bool ok = db.open();         //尝试连接数据库
-        if(ok)
-            qDebug()<<"链接数据库成功";
-        else
-            qDebug()<<"链接数据库失败，因为"<<db.lastError().text();
-
-        QSqlQuery query(db);
-        bool success=query.exec("create table RSSIValueTable(id integer,RSSI1 integer,RSSI2 integer,RSSI3 integer,RSSI4 integer)");
-        if(success)
-            qDebug()<<"数据库表创建成功！\n";
-        else
-            qDebug()<<"数据库表创建失败或者已经存在！\n";
-    }
-
-    /*初始化查看数据库窗口*/
+    /*初始化数据库 及 查看数据库窗口*/
     databaseDialog=new Dialogdatabase;
 }
 
@@ -98,9 +78,9 @@ void MainWindow::on_pushButton_openMap_clicked()
 }
 
 /*通过地图向地面车发送目标位置坐标*/
-void MainWindow::MyCarClickedSlot(quint16 x, quint16 y)
+void MainWindow::MyCarClickedSlot(qint16 x, qint16 y, float z)
 {
-    Leather_Data_Send(x,y,0x01);
+    Leather_Data_Send(x,y,z,0x01);
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -113,29 +93,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_pushButton_databaseOpen_clicked()
 {
     databaseDialog->show();
+    databaseDialog->openFlag=true;
+
+    //databaseDialog->lookupFromDatabase(2,0);
 }
 
-void MainWindow::saveToDatabase(char RSSI1, char RSSI2, char RSSI3, char RSSI4)
-{
-    QSqlQuery query(db);
 
-    query.exec("select *from RSSIValueTable");
-    query.last(); //query指向结果集的最后一条记录
-    int ID = query.value(0).toString().toInt();
-
-    query.prepare("insert into RSSIValueTable values(:id,:RSSI1,:RSSI2,:RSSI3,:RSSI4)");
-        query.bindValue(":id",ID+1); //id自加一
-        query.bindValue(":RSSI1",RSSI1); //注意qstring类型！！！！！
-        query.bindValue(":RSSI2",RSSI2);
-        query.bindValue(":RSSI3",RSSI3);
-        query.bindValue(":RSSI4",RSSI4);
-
-    qDebug()<<ID+1<<RSSI1<<RSSI2<<RSSI3<<RSSI4;
-    bool success=query.exec();
-    if(!success)
-    {
-        QSqlError lastError=query.lastError();
-        qDebug()<<lastError.driverText()<<"插入失败";
-    }
-    //databaseShowDataSlot();
-}

@@ -12,6 +12,7 @@ INPUT(
 ./release\qextserialenumerator.o
 ./release\qextserialport_win.o
 ./release\qextserialenumerator_win.o
+./release\qrc_image.o
 ./release\moc_mainwindow.o
 ./release\moc_scope.o
 ./release\moc_qcustomplot.o
