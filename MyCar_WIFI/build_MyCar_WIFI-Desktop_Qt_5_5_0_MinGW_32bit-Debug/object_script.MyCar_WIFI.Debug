@@ -8,6 +8,7 @@ INPUT(
 ./debug\form.o
 ./debug\dialogdatabase.o
 ./debug\algorithm.o
+./debug\apinfo.o
 ./debug\qextserialport.o
 ./debug\qextserialenumerator.o
 ./debug\qextserialport_win.o

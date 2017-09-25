@@ -21,7 +21,11 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QTableView" name="tableView"/>
+    <widget class="QTableView" name="tableView">
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>70</number>
+     </attribute>
+    </widget>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -107,11 +111,6 @@
   </layout>
   <zorder>tableView</zorder>
   <zorder></zorder>
-  <zorder>pushButton_dbAddData</zorder>
-  <zorder>pushButton_dbDeleteData</zorder>
-  <zorder>pushButton_dbDeleteAll</zorder>
-  <zorder>pushButton_dbRefresh</zorder>
-  <zorder>verticalSpacer</zorder>
  </widget>
  <resources/>
  <connections/>

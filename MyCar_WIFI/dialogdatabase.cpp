@@ -1,3 +1,9 @@
+/*******************************************
+ * 作者     ：王丕阁
+ * 文件名   ：dialogdatabase.cpp
+ * 函数功能 ：数据库增删改查、显示窗口
+ * 修改日期 ：2017-05-18
+  *****************************************/
 #include "dialogdatabase.h"
 #include "ui_dialogdatabase.h"
 
@@ -130,6 +136,12 @@ float Dialogdatabase::lookupFromDatabase(quint8 tableNo, quint16 id, quint8 inde
         }
     }
     return dataTemp;
+}
+
+qint16 Dialogdatabase::lookupDatabaseRows(void)
+{
+    return model->rowCount();
+//    query.prepare(QString("select count(*) from %1").arg(TableNumber.value(tableNo)));
 }
 
 void Dialogdatabase::on_pushButton_dbAddData_clicked()

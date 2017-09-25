@@ -9,22 +9,50 @@
 #define my_pow(x) ((x)*(x))
 #define EXP 2.7183
 #define TWOPI2 39.4784
-#define RiNum 51
+#define RiNum 50
 
-float P_S_RiValue[RiNum];
-float RSSIValue[BSSID_raw]={0.0};
-float lastRSSIValue[BSSID_raw]={0.0};
-QStringList BSSIDList = (QStringList() << "bc:d1:77:25:11:a2" << "ec:88:8f:54:10:dc" << "cc:34:29:89:2f:a0" << "ec:17:2f:51:3c:66");
+extern bool robotInitFlag;
+extern double P_S_RiValue[RiNum];
+extern float RSSIValue[BSSID_raw];
+extern float lastRSSIValue[BSSID_raw];
+extern quint8 SlipWindow[5]; //定义一个滑窗，防止跳变
+extern QStringList BSSIDList;
 
 struct APInformation
 {
     quint16 id;
     float RSSIValueAvg[NUMBER_AP];
     float RSSIValueDev[NUMBER_AP];
+    float RSSIValueKFFilter[NUMBER_AP];
     float X;
     float Y;
 };
 
-struct APInformation apInformation, apInformationTemp;
+struct POS_ODOMETER
+{
+    qint16 X;
+    qint16 Y;
+    qint16 Z;
+};
+
+struct POSITION
+{
+    float X;
+    float Y;
+    float Z;
+};
+
+struct NOISE
+{
+    double ProcessNiose_Q;
+    double MeasureNoise_R;
+};
+
+extern struct POSITION fusePos, WKNNPos, wifiPos, wifiPosSuc, TempPos;
+extern struct POS_ODOMETER odometer, lastOdometer, errorOdometer, lastMatchOdom;
+extern struct NOISE noiseWifiPosX, noiseWifiPosY;
+
+extern struct APInformation apInformation, apInformationTemp;
+
 #endif // APINFO
 

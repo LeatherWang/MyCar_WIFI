@@ -464,17 +464,31 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>78</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="maximumSize">
+              <size>
+               <width>81</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>工作模式：</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboBox_mode">
+             <property name="maximumSize">
+              <size>
+               <width>81</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_databaseOpen">
@@ -528,7 +542,7 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>180</width>
+             <width>175</width>
              <height>0</height>
             </size>
            </property>
@@ -539,6 +553,12 @@
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_TCPClearCount">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>清除计数</string>
            </property>

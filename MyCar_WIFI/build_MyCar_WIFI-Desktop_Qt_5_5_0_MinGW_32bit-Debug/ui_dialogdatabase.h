@@ -45,6 +45,7 @@ public:
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         tableView = new QTableView(Dialogdatabase);
         tableView->setObjectName(QStringLiteral("tableView"));
+        tableView->horizontalHeader()->setDefaultSectionSize(70);
 
         horizontalLayout->addWidget(tableView);
 
@@ -92,10 +93,6 @@ public:
         horizontalLayout->addLayout(verticalLayout);
 
         tableView->raise();
-        pushButton_dbAddData->raise();
-        pushButton_dbDeleteData->raise();
-        pushButton_dbDeleteAll->raise();
-        pushButton_dbRefresh->raise();
 
         retranslateUi(Dialogdatabase);
 

@@ -21,11 +21,12 @@ public:
     void saveToDatabase(quint16 id, float *RSSI_Avg, float *RSSI_Dev, float Value_X, float Value_Y);
     QSqlDatabase Qdb;
     bool openFlag;
-    float lookupFromDatabase(quint8 tableNo, quint16 id);
+    float lookupFromDatabase(quint8 tableNo, quint16 id, quint8 index);
     void updateFromDatabase(quint16 id, quint16 index, float value);
     void deleteFromDatabase(quint16 id);
     QStringList APTable;
     QStringList TableNumber;
+    qint16 lookupDatabaseRows(void);
 private:
     Ui::Dialogdatabase *ui;
     QSqlTableModel *model;

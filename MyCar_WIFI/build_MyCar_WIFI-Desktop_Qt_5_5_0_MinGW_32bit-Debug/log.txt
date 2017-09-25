@@ -1,0 +1,24 @@
+Debug: File:(..\main.cpp) Line:(62) The app starts running (2017-09-25 01:08:28 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(28) xxxxxx链接数据库成功xxxxxxxxx (2017-09-25 01:08:29 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(37) 数据库表 RSSIValueTable 创建失败或者已经存在！
+ (2017-09-25 01:08:29 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(43) 数据库表 TransferTable 创建失败或者已经存在！
+ (2017-09-25 01:08:29 周一)
+Debug: File:(..\serialtalk.cpp) Line:(175) 256 201 (2017-09-25 01:08:52 周一)
+Debug: File:(..\serialtalk.cpp) Line:(212) robot未初始化完成！！ (2017-09-25 01:08:52 周一)
+Debug: File:(..\serialtalk.cpp) Line:(175) 125 116 (2017-09-25 01:09:00 周一)
+Debug: File:(..\serialtalk.cpp) Line:(212) robot未初始化完成！！ (2017-09-25 01:09:00 周一)
+Debug: File:(..\main.cpp) Line:(62) The app starts running (2017-09-25 01:10:59 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(28) xxxxxx链接数据库成功xxxxxxxxx (2017-09-25 01:11:00 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(37) 数据库表 RSSIValueTable 创建失败或者已经存在！
+ (2017-09-25 01:11:00 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(43) 数据库表 TransferTable 创建失败或者已经存在！
+ (2017-09-25 01:11:00 周一)
+Warning: File:(io\qiodevice.cpp) Line:(85) QIODevice::write (QextSerialPort): device not open (2017-09-25 01:11:04 周一)
+Warning: File:(io\qiodevice.cpp) Line:(85) QIODevice::write (QextSerialPort): device not open (2017-09-25 01:11:42 周一)
+Debug: File:(..\main.cpp) Line:(62) The app starts running (2017-09-25 20:06:36 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(28) xxxxxx链接数据库成功xxxxxxxxx (2017-09-25 20:06:40 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(37) 数据库表 RSSIValueTable 创建失败或者已经存在！
+ (2017-09-25 20:06:40 周一)
+Debug: File:(..\dialogdatabase.cpp) Line:(43) 数据库表 TransferTable 创建失败或者已经存在！
+ (2017-09-25 20:06:41 周一)

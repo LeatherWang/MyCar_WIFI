@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     serialtalk.cpp \
     form.cpp \
     dialogdatabase.cpp \
-    algorithm.cpp
+    algorithm.cpp \
+    apinfo.cpp
 
 HEADERS  += \
     mainwindow.h \

@@ -1,3 +1,4 @@
+void on_pushButton_test_clicked();
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -8,9 +9,11 @@
 #include "qextserialenumerator.h"
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QTimer>
 #include "form.h"
 #include "dialogdatabase.h"
 #include "algorithm.h"
+#include "apinfo.h"
 
 namespace Ui {
 class MainWindow;
@@ -44,6 +47,9 @@ private:
     QString toBlueText(QString str);
     void Leather_Data_Receive(QByteArray data);
     void Leather_Data_Send(qint16 posionX, qint16 posionY, float positionZ, quint8 flag);
+    void SquareInsertWKNN(float *rssiValue);
+    void LineInsertWKNN(float *rssiValue);
+    void InitRobotLocat();
 
     scope *myscope;
 
@@ -55,6 +61,8 @@ private:
 //    void saveToDatabase(char RSSI1, char RSSI2, char RSSI3, char RSSI4);
 
     Algorithm algorithm;
+
+    QTimer *myTimer;
 
 protected:
      void closeEvent(QCloseEvent *event);//重载函数，纯虚函数
@@ -95,7 +103,9 @@ private slots:
     void RSSISaveSlot(quint8 index);
 
     double ComputeP_S_Ri(quint16 id, float *rssiValue);
-    void ComputeP_S_Rn(float *rssiValue);
+    void ComputeP_S_Rn(float *rssiValueTemp);
+
+    void TimerUpdateSlot();
 };
 
 #endif // MAINWINDOW_H

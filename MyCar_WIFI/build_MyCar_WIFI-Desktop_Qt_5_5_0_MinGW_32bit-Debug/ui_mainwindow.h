@@ -74,7 +74,9 @@ public:
     QLabel *messageLabel_linkTCPState;
     QFrame *line;
     QHBoxLayout *horizontalLayout_2;
-    QSpacerItem *horizontalSpacer_2;
+    QVBoxLayout *verticalLayout_5;
+    QLabel *label;
+    QComboBox *comboBox_mode;
     QPushButton *pushButton_databaseOpen;
     QPushButton *pushButton_showScope;
     QHBoxLayout *horizontalLayout_7;
@@ -323,9 +325,23 @@ public:
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        horizontalSpacer_2 = new QSpacerItem(78, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        label = new QLabel(groupBox);
+        label->setObjectName(QStringLiteral("label"));
+        label->setMaximumSize(QSize(81, 16777215));
 
-        horizontalLayout_2->addItem(horizontalSpacer_2);
+        verticalLayout_5->addWidget(label);
+
+        comboBox_mode = new QComboBox(groupBox);
+        comboBox_mode->setObjectName(QStringLiteral("comboBox_mode"));
+        comboBox_mode->setMaximumSize(QSize(81, 16777215));
+
+        verticalLayout_5->addWidget(comboBox_mode);
+
+
+        horizontalLayout_2->addLayout(verticalLayout_5);
 
         pushButton_databaseOpen = new QPushButton(groupBox);
         pushButton_databaseOpen->setObjectName(QStringLiteral("pushButton_databaseOpen"));
@@ -354,12 +370,14 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(label_tcpReceive->sizePolicy().hasHeightForWidth());
         label_tcpReceive->setSizePolicy(sizePolicy2);
-        label_tcpReceive->setMinimumSize(QSize(180, 0));
+        label_tcpReceive->setMinimumSize(QSize(175, 0));
 
         horizontalLayout_7->addWidget(label_tcpReceive);
 
         pushButton_TCPClearCount = new QPushButton(groupBox);
         pushButton_TCPClearCount->setObjectName(QStringLiteral("pushButton_TCPClearCount"));
+        sizePolicy1.setHeightForWidth(pushButton_TCPClearCount->sizePolicy().hasHeightForWidth());
+        pushButton_TCPClearCount->setSizePolicy(sizePolicy1);
 
         horizontalLayout_7->addWidget(pushButton_TCPClearCount);
 
@@ -427,6 +445,7 @@ public:
         pushButton_linkTCP->setText(QApplication::translate("MainWindow", "\350\277\236\346\216\245\346\234\215\345\212\241\345\231\250", 0));
         pushButton_sendTCP->setText(QApplication::translate("MainWindow", "\345\217\221\351\200\201", 0));
         messageLabel_linkTCPState->setText(QApplication::translate("MainWindow", "\346\263\250\346\204\217\357\274\232\346\234\252\350\277\236\346\216\245\357\274\201\357\274\201\357\274\201", 0));
+        label->setText(QApplication::translate("MainWindow", "\345\267\245\344\275\234\346\250\241\345\274\217\357\274\232", 0));
         pushButton_databaseOpen->setText(QApplication::translate("MainWindow", "\346\211\223\345\274\200\346\225\260\346\215\256\345\272\223", 0));
         pushButton_showScope->setText(QApplication::translate("MainWindow", "\346\237\245\347\234\213\346\263\242\345\275\242", 0));
         label_tcpReceive->setText(QApplication::translate("MainWindow", "**", 0));

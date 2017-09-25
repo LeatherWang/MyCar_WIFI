@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>815</width>
+    <width>700</width>
     <height>700</height>
    </rect>
   </property>
@@ -16,10 +16,10 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>710</x>
-     <y>10</y>
-     <width>100</width>
-     <height>291</height>
+     <x>360</x>
+     <y>280</y>
+     <width>331</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="minimumSize">
@@ -30,131 +30,33 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>100</width>
-     <height>350</height>
+     <width>1020</width>
+     <height>1000</height>
     </size>
    </property>
    <property name="title">
-    <string>小车信息</string>
+    <string>robot位置估计</string>
    </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>170</y>
-      <width>54</width>
-      <height>12</height>
+      <y>20</y>
+      <width>71</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>实时位置：</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>54</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>起点：</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>54</width>
-      <height>12</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>终点：</string>
+     <string>编码器定位：</string>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>120</y>
+      <x>10</x>
+      <y>40</y>
       <width>76</width>
-      <height>44</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="minimumSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>X:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="endX_label">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>未知</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="minimumSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Y:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="endY_label">
-         <property name="minimumSize">
-          <size>
-           <width>50</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>未知</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>190</y>
-      <width>76</width>
-      <height>44</height>
+      <height>68</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -182,7 +84,7 @@
           </size>
          </property>
          <property name="text">
-          <string>未知</string>
+          <string>**</string>
          </property>
         </widget>
        </item>
@@ -212,7 +114,31 @@
           </size>
          </property>
          <property name="text">
-          <string>未知</string>
+          <string>**</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>R:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="endA_label">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>**</string>
          </property>
         </widget>
        </item>
@@ -220,20 +146,20 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>50</y>
+      <x>240</x>
+      <y>40</y>
       <width>76</width>
-      <height>44</height>
+      <height>68</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="label_20">
          <property name="minimumSize">
           <size>
            <width>16</width>
@@ -246,7 +172,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="startX_label">
+        <widget class="QLabel" name="label_fuseX">
          <property name="minimumSize">
           <size>
            <width>50</width>
@@ -254,16 +180,16 @@
           </size>
          </property>
          <property name="text">
-          <string>0</string>
+          <string>**</string>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_12">
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="label_22">
          <property name="minimumSize">
           <size>
            <width>16</width>
@@ -276,7 +202,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="startY_label">
+        <widget class="QLabel" name="label_fuseY">
          <property name="minimumSize">
           <size>
            <width>50</width>
@@ -284,7 +210,31 @@
           </size>
          </property>
          <property name="text">
-          <string>0</string>
+          <string>**</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_15">
+       <item>
+        <widget class="QLabel" name="label_24">
+         <property name="text">
+          <string>R:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_fuseA">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>**</string>
          </property>
         </widget>
        </item>
@@ -292,22 +242,24 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QLabel" name="label_25">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>74</width>
-      <height>18</height>
+      <x>220</x>
+      <y>20</y>
+      <width>71</width>
+      <height>16</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_7"/>
+    <property name="text">
+     <string>融合位置：</string>
+    </property>
    </widget>
   </widget>
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>705</x>
+     <x>355</x>
      <y>0</y>
      <width>3</width>
      <height>700</height>
@@ -320,10 +272,10 @@
   <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>710</x>
-     <y>300</y>
-     <width>101</width>
-     <height>261</height>
+     <x>530</x>
+     <y>410</y>
+     <width>161</width>
+     <height>131</height>
     </rect>
    </property>
    <property name="title">
@@ -384,10 +336,10 @@
    <widget class="QPushButton" name="pushButton_sendTargetPosition">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>110</y>
-      <width>61</width>
-      <height>23</height>
+      <x>100</x>
+      <y>20</y>
+      <width>51</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
@@ -398,63 +350,13 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>140</y>
+      <y>110</y>
       <width>91</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>已发送0帧</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="back_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>160</y>
-      <width>80</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>70</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>200</width>
-      <height>50</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>回到原点</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="clear_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>210</y>
-      <width>80</width>
-      <height>40</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>70</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>200</width>
-      <height>50</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>清除轨迹</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_tragetZ">
@@ -483,12 +385,38 @@
      <string>Z:</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_tenFont">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>70</y>
+      <width>51</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>十字</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_circle">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>100</y>
+      <width>51</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>自旋</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="label_13">
    <property name="geometry">
     <rect>
-     <x>720</x>
-     <y>570</y>
+     <x>360</x>
+     <y>610</y>
      <width>91</width>
      <height>91</height>
     </rect>
@@ -506,15 +434,15 @@
   <widget class="QLabel" name="label_11">
    <property name="geometry">
     <rect>
-     <x>720</x>
-     <y>670</y>
-     <width>71</width>
+     <x>390</x>
+     <y>680</y>
+     <width>61</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>11</pointsize>
+     <pointsize>9</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -523,36 +451,566 @@
     <string>单位：cm</string>
    </property>
   </widget>
-  <widget class="QLabel" name="endA_label">
+  <widget class="QPushButton" name="clear_pushButton">
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>270</y>
-     <width>50</width>
-     <height>16</height>
+     <x>360</x>
+     <y>560</y>
+     <width>80</width>
+     <height>40</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>50</width>
-     <height>16</height>
+     <width>70</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>200</width>
+     <height>50</height>
     </size>
    </property>
    <property name="text">
-    <string>未知</string>
+    <string>清除轨迹</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_12">
+  <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
-     <x>720</x>
-     <y>250</y>
+     <x>360</x>
+     <y>10</y>
+     <width>331</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>WiFi定位</string>
+   </property>
+   <widget class="QLabel" name="label_16">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>180</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>匹配训练点位置：</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>200</y>
+      <width>76</width>
+      <height>44</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_17">
+         <property name="minimumSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>X:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_matPX">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>**</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
+        <widget class="QLabel" name="label_18">
+         <property name="minimumSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Y:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_matPY">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>**</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>281</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>80</number>
+    </attribute>
+    <row>
+     <property name="text">
+      <string>AP1</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>AP2</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>AP3</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>AP4</string>
+     </property>
+    </row>
+    <column>
+     <property name="text">
+      <string>采样点均值</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>匹配点均值</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>差值</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>180</y>
+      <width>162</width>
+      <height>68</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_14">
+       <item>
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>当前匹配点编号：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_matNo">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>**</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_13">
+       <item>
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>  最大似然概率：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_maxprob">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>**</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
+       <item>
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>      该点概率：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_prob">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>**</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_5">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>550</y>
+     <width>181</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>遥控器</string>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>11</y>
+      <width>166</width>
+      <height>136</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_16">
+     <item>
+      <widget class="QPushButton" name="pushButton_left">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="image.qrc">
+         <normaloff>:/image/img/left.png</normaloff>:/image/img/left.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QPushButton" name="pushButton_up">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/image/img/up.png</normaloff>:/image/img/up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="back_pushButton">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>0.0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_down">
+         <property name="minimumSize">
+          <size>
+           <width>50</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="image.qrc">
+           <normaloff>:/image/img/down.png</normaloff>:/image/img/down.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_right">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="image.qrc">
+         <normaloff>:/image/img/right.png</normaloff>:/image/img/right.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>430</y>
+     <width>76</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>X:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="startX_label">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>**</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="startY_label">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>**</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>490</y>
+     <width>76</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>X:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="endX_label">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>**</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="minimumSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="endY_label">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>**</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>470</y>
      <width>54</width>
      <height>12</height>
     </rect>
    </property>
    <property name="text">
-    <string>角度：</string>
+    <string>目标点：</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_28">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>410</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>初始化位置：</string>
    </property>
   </widget>
  </widget>

@@ -1,3 +1,9 @@
+/*******************************************
+ * 作者     ：王丕阁
+ * 文件名   ：mainwindow.cpp
+ * 函数功能 ：各个功能初始化部分
+ * 修改日期 ：2017-05-18
+  *****************************************/
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -6,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("主界面");
     zhentou.resize(2);
     zhentou[0] = 0XAA;
     zhentou[1] = 0XAF;
@@ -16,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->pushButton_serialOpen->setStyleSheet("background-color:rgb(145,200,200);");
     ui->pushButton_serialSend->setStyleSheet("background-color:rgb(180,218,218);");
+
+    QStringList longerList = (QStringList() << "离线采集" << "在线定位");
+    ui->comboBox_mode->addItems(longerList);
 
     /*初始化TCP通信*/
     tcpSocket = new QTcpSocket(this);
@@ -58,6 +68,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /*初始化数据库 及 查看数据库窗口*/
     databaseDialog=new Dialogdatabase;
+
+    /*初始化定时器->KF数据融合*/
+    myTimer = new QTimer(this);
+    connect(myTimer, SIGNAL(timeout()), this, SLOT(TimerUpdateSlot()));
+    myTimer->start(100);
+
+    /*初始化参数*/
+    odometer.X = 0;
+    odometer.Y = 0;
+    lastMatchOdom.X = 0;
+    lastMatchOdom.Y = 0;
+    noiseWifiPosX.ProcessNiose_Q = 0.001;
+    noiseWifiPosX.MeasureNoise_R = 1;
+    noiseWifiPosY.ProcessNiose_Q = 0.001;
+    noiseWifiPosY.MeasureNoise_R = 1;
 }
 
 MainWindow::~MainWindow()
@@ -86,6 +111,9 @@ void MainWindow::MyCarClickedSlot(qint16 x, qint16 y, float z)
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     Q_UNUSED(event);
+    if(m_Com->isOpen())
+        m_Com->close();
+
     QApplication* appl;
     appl->quit();
 }
@@ -94,8 +122,6 @@ void MainWindow::on_pushButton_databaseOpen_clicked()
 {
     databaseDialog->show();
     databaseDialog->openFlag=true;
-
     //databaseDialog->lookupFromDatabase(2,0);
 }
-
 

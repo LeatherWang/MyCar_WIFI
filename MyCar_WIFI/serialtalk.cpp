@@ -1,3 +1,9 @@
+/*******************************************
+ * 作者    ：王丕阁
+ * 文件名   ：serialtalk.cpp
+ * 函数功能 ：串口通信
+ * 修改日期 ：2017-04-15
+  *****************************************/
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "math.h"
@@ -121,8 +127,6 @@ typedef union
 } UnionFloat;
 UnionFloat unionFloat;
 
-qint16 Position_X, Position_Y;
-float Position_Z;
 void MainWindow::Leather_Data_Receive(QByteArray data)
 {
     quint8 sum = 0;
@@ -136,22 +140,30 @@ void MainWindow::Leather_Data_Receive(QByteArray data)
     {
         Union_dataBuf.son[1] = quint8(data.at(4));
         Union_dataBuf.son[0] = quint8(data.at(5));
-        Position_X = Union_dataBuf.sum;
+        if(Union_dataBuf.sum < 0)
+            qDebug()<<"odometer.X="<<Union_dataBuf.sum;
+            //QMessageBox::warning(this, tr("错误！！"),tr("odometer.X=")+QString::number(Union_dataBuf.sum,10),QMessageBox::Ok);
+        else
+            odometer.X = Union_dataBuf.sum;
 
         Union_dataBuf.son[1] = quint8(data.at(6));
         Union_dataBuf.son[0] = quint8(data.at(7));
-        Position_Y = Union_dataBuf.sum;
+        if(Union_dataBuf.sum < 0)
+            qDebug()<<"odometer.Y="<<Union_dataBuf.sum;
+            //QMessageBox::warning(this, tr("错误！！"),tr("odometer.Y=")+QString::number(Union_dataBuf.sum,10),QMessageBox::Ok);
+        else
+            odometer.Y = Union_dataBuf.sum;
 
         unionFloat.son[3] = quint8(data.at(8));
         unionFloat.son[2] = quint8(data.at(9));
         unionFloat.son[1] = quint8(data.at(10));
         unionFloat.son[0] = quint8(data.at(11));
-        Position_Z = unionFloat.sum;
+        odometer.Z = unionFloat.sum;
 
         //qDebug()<<Position_Z;
         if(myForm->openFlag == true)
         {
-            myForm->MyCarComeBack(Position_X, Position_Y, Position_Z);//调用地图显示
+            myForm->MyCarComeBack(odometer.X, odometer.Y, odometer.Z);//调用地图显示
         }
     }
 }
@@ -187,8 +199,18 @@ void MainWindow::Leather_Data_Send(qint16 posionX, qint16 posionY, float positio
 
     array[_cnt++]=sum;
 
-    if(m_Com->isOpen())
-        m_Com->write(array);
+    if(robotInitFlag == true)
+    {
+        if(m_Com->isOpen())
+            m_Com->write(array);
+    }
+    else
+    {
+        //QMessageBox::warning(this, tr("错误！！"),tr("robot未初始化完成！！"),QMessageBox::Ok);
+        if(m_Com->isOpen())
+            m_Com->write(array);
+        qDebug()<<"robot未初始化完成！！";
+    }
 }
 
 /********************************* End user code. *********************************************/
